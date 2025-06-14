@@ -1,34 +1,7 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Sparkle, Rocket, Brain, Code, Atom, MousePointerClick } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-// Modern glassmorphism effect for cards/sections
-const GlassCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
-  <div className={`backdrop-blur-lg bg-white/70 border border-blue-100 shadow-lg rounded-3xl p-7 ${className}`}>
-    {children}
-  </div>
-);
-
-const SparkleAccent = () => (
-  <div className="pointer-events-none absolute z-30 w-full h-full left-0 top-0 overflow-hidden">
-    {[...Array(16)].map((_, i) => (
-      <div
-        key={i}
-        className="absolute rounded-full bg-gradient-to-br from-yellow-300/60 to-blue-400/30 animate-sparkle"
-        style={{
-          width: `${14 + Math.random() * 20}px`,
-          height: `${14 + Math.random() * 20}px`,
-          left: `${Math.random() * 100}%`,
-          top: `${Math.random() * 90}%`,
-          opacity: 0.15 + Math.random() * 0.2,
-          animationDelay: `${Math.random() * 5}s`
-        }}
-      />
-    ))}
-  </div>
-);
 
 const Section = ({
   id,
@@ -42,60 +15,62 @@ const Section = ({
   className?: string;
 }) => (
   <section id={id} className={`relative w-full py-14 md:py-20 ${bg || ""} ${className}`.trim()}>
-    <SparkleAccent />
     {children}
   </section>
 );
 
+// Floating effect retained but softened: subtle blue/yellow glow, sharp shadow, slightly larger
 const HomeHero = () => (
   <Section
     id="home"
     bg="bg-gradient-to-b from-[#f3f6fb] via-blue-50 to-[#ddebf7] overflow-visible"
-    className="pt-10 pb-16"
+    className="pt-10 pb-20"
   >
-    <div className="flex flex-col md:flex-row-reverse items-center justify-between gap-10 max-w-7xl mx-auto px-4">
-      {/* Hero Illustration with floating glow */}
-      <div className="relative flex items-center justify-center max-w-[640px] w-full md:w-[520px] lg:w-[700px]">
-        {/* Animated blurred glowing orb */}
-        <div className="absolute -top-10 left-1/4 w-2/3 h-1/2 z-10 pointer-events-none blur-3xl rounded-full bg-gradient-to-br from-blue-300 via-accent to-yellow-200 opacity-35 animate-pulse-smooth"></div>
-        {/* Animated image */}
-        <img
-          src="/lovable-uploads/a0ee7f5e-7d91-46e2-b501-aad3f36b4398.png"
-          alt="Kids playing with robots"
-          className="w-full h-auto animate-floating-hero z-20 relative"
-          style={{ objectFit: "contain", minHeight: "320px", minWidth: "280px", maxHeight: "580px", filter: "drop-shadow(0 24px 42px rgba(96,180,255,0.09))" }}
-        />
-      </div>
-      {/* Text Content */}
-      <GlassCard className="max-w-xl flex flex-col items-start gap-5 !p-9 relative z-30 shadow-xl bg-white/80 border-blue-200/30">
-        <h1 className="text-5xl md:text-7xl font-playfair font-bold text-stemblue mb-1 tracking-tight leading-[1.14] bg-gradient-to-r from-blue-800 via-accent to-yellow-400 bg-clip-text text-transparent shadow-text-glow">
+    <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-10 max-w-7xl mx-auto px-4">
+      {/* Text beside image for modern hero */}
+      <div className="flex-1 flex flex-col items-start z-20 gap-6 max-w-xl">
+        <h1 className="text-5xl md:text-7xl font-playfair font-bold bg-gradient-to-r from-blue-800 via-accent to-yellow-400 bg-clip-text text-transparent leading-tight shadow-text-glow">
           Unlocking <span className="text-yellow-500 bg-gradient-to-br from-yellow-400 to-accent bg-clip-text text-transparent">endless possibilities</span> to empower young innovators.
         </h1>
-        <p className="text-lg md:text-2xl text-stemblue/90 font-semibold drop-shadow">
+        <p className="text-lg md:text-2xl text-stemblue/90 font-semibold">
           Empowering everyone with skills for the future—kids, teens, teachers, and adults.<br />
           <span className="text-accent font-bold">#STEMverse</span>
         </p>
         <Button
           size="lg"
-          className="mt-1 px-9 py-4 bg-gradient-to-tr from-blue-400 via-accent to-yellow-400 hover:from-yellow-400 hover:to-accent text-white font-extrabold rounded-2xl shadow-lg hover:shadow-2xl
+          className="mt-1 px-9 py-4 bg-gradient-to-tr from-blue-400 via-accent to-yellow-400 hover:from-yellow-400 hover:to-accent text-white font-extrabold rounded-xl shadow-lg
            transition hover:scale-105 ring-2 ring-blue-300/30"
           onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" })}
         >
           Explore Programs <Rocket className="ml-2 animate-bounce-x" />
         </Button>
-      </GlassCard>
+      </div>
+      {/* FLUSH, floating, glowing, modern image */}
+      <div className="relative flex-1 flex items-center justify-center md:justify-end w-full max-w-[600px] pt-8 md:pt-0">
+        <div className="absolute -inset-x-6 -top-12 h-[400px] blur-2xl rounded-full opacity-40 pointer-events-none"
+          style={{
+            background: "radial-gradient(circle at 50% 30%, #c2dbfb 0%, #ffe472 60%, #ddebf7 100%)"
+          }}
+        />
+        <img
+          src="/lovable-uploads/a0ee7f5e-7d91-46e2-b501-aad3f36b4398.png"
+          alt="Kids playing with robots"
+          className="w-full h-auto max-h-[480px] md:max-h-[540px] object-contain animate-float-hero"
+          style={{ borderRadius: "2.5rem" }}
+        />
+        <div className="absolute left-1/2 -translate-x-1/2 top-[16%] w-32 h-24 bg-blue-200/30 rounded-full blur-2xl pointer-events-none animate-float-glow" />
+      </div>
     </div>
-    {/* Inline animation keyframes */}
     <style>{`
-      @keyframes floating-hero {
+      @keyframes float-hero {
         0% { transform: translateY(0px);}
-        25% { transform: translateY(-27px) scale(1.02);}
-        45% { transform: translateY(-14px) scale(0.97);}
-        70% { transform: translateY(-38px) scale(1.04);}
+        25% { transform: translateY(-20px);}
+        50% { transform: translateY(10px);}
+        75% { transform: translateY(-15px);}
         100% { transform: translateY(0px);}
       }
-      .animate-floating-hero {
-        animation: floating-hero 5.6s ease-in-out infinite;
+      .animate-float-hero {
+        animation: float-hero 7.7s cubic-bezier(.3,0,.7,1) infinite;
         will-change: transform;
       }
       .shadow-text-glow {
@@ -108,47 +83,39 @@ const HomeHero = () => (
         0% { transform: translateX(0);}
         100% { transform: translateX(6px);}
       }
-      @keyframes sparkle {
-        0%, 100% { opacity: .15; transform: scale(0.8);}
-        50% { opacity: .36; transform: scale(1);}
+      @keyframes float-glow {
+        0%, 100% { opacity: 0.32; }
+        50% { opacity: 0.6; }
       }
-      .animate-sparkle {
-        animation: sparkle 4.6s infinite;
-      }
-      @keyframes pulse-smooth {
-        0% { opacity: .33;}
-        50% { opacity: .58;}
-        100% { opacity: .33;}
-      }
-      .animate-pulse-smooth {
-        animation: pulse-smooth 11s cubic-bezier(.5,0,.6,1) infinite;
+      .animate-float-glow {
+        animation: float-glow 8s ease-in-out infinite;
       }
     `}</style>
   </Section>
 );
 
-// Modernized card with glass/gradient border and a lively hover state
-const GlassProgramCard = ({
-  color,
-  title,
-  subtitle,
-  description,
-}: {
+// Card style: accent borders, modern spacing, but use original gradient colors
+const GlassCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
+  <div className={`rounded-2xl bg-white/80 border border-blue-100 shadow-lg p-8 ${className}`}>
+    {children}
+  </div>
+);
+
+const GlassProgramCard = ({ color, title, subtitle, description }: {
   color: string;
   title: string;
   subtitle: string;
   description: string;
 }) => (
   <div
-    className={`group p-5 rounded-2xl bg-gradient-to-br ${color} border-2 border-blue-100 shadow-lg hover:shadow-blue-200/70
-     glass-card transition-transform hover:scale-105 hover:border-accent/40 hover:shadow-xl relative overflow-hidden`}
-    style={{ backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)" }}
+    className={`group p-5 rounded-xl bg-gradient-to-br ${color} border-2 border-blue-100 shadow hover:shadow-blue-200/60
+     transition-transform hover:scale-103 hover:border-accent/40 relative overflow-hidden`}
+    style={{ backdropFilter: "blur(6px)", WebkitBackdropFilter: "blur(6px)" }}
   >
     <div className="text-lg font-bold text-stemblue">{title}</div>
     <div className="text-sm font-semibold text-yellow-700">{subtitle}</div>
     <div className="text-gray-800 text-sm mt-1">{description}</div>
-    {/* Subtle moving highlight accent */}
-    <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-32 h-16 bg-accent/25 rounded-full blur-xl opacity-35 group-hover:opacity-60 animate-pulse-smooth pointer-events-none" />
+    <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-32 h-16 bg-accent/15 rounded-full blur-xl pointer-events-none" />
   </div>
 );
 
@@ -320,8 +287,9 @@ const Footer = () => (
 );
 
 const OnePageSections = () => (
-  <div>
+  <div className="bg-gradient-to-br from-[#f3f6fb] via-white to-[#ddebf7] min-h-screen">
     <HomeHero />
+    <hr className="border-b border-blue-100 my-0" />
     <MissionSection />
     <STEMDefSection />
     <ProgramsSection />
