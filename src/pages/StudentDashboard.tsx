@@ -1,3 +1,4 @@
+
 import { useSession } from "@/hooks/useSession";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -13,7 +14,17 @@ import {
 } from "@/components/ui/card";
 import ScienceIcon from "@/components/ScienceIcon";
 
-// Define tools by category
+// Domain icons for blocks
+const domainIcons: Record<string, string | null> = {
+  "Game Development": "/lovable-uploads/1ecf0702-eaa5-4283-9bb5-ff187df825bf.png",
+  "App Development": "/lovable-uploads/916481b5-e79f-4443-bbe3-028d14554614.png",
+  "Programming": "/lovable-uploads/c6f848dc-aeef-4997-afcc-adfde94ce539.png",
+  "3D Modeling & Electronics": "/lovable-uploads/0f6280c4-a4bc-4aa3-ad86-61a54419d717.png",
+  "Artificial Intelligence": "/lovable-uploads/08094218-4b61-4ccf-8daf-b73c67a00d54.png",
+  "Science Simulations": null, // handled by custom SVG ScienceIcon
+  "AR/VR": "/lovable-uploads/ef0f2976-79fd-47b8-ab0a-a598251ada8f.png",
+};
+
 const toolBlocks = [
   {
     title: "Game Development",
@@ -21,7 +32,6 @@ const toolBlocks = [
       {
         name: "Scratch",
         url: "https://scratch.mit.edu/",
-        icon: "/lovable-uploads/a0ee7f5e-7d91-46e2-b501-aad3f36b4398.png",
         color: "bg-yellow-100 hover:bg-yellow-200",
       },
     ],
@@ -32,13 +42,11 @@ const toolBlocks = [
       {
         name: "MIT App Inventor",
         url: "https://appinventor.mit.edu/",
-        icon: "/lovable-uploads/d09ee496-38e9-4fbb-8a39-ed4fbeafc3a3.png",
         color: "bg-green-100 hover:bg-green-200",
       },
       {
         name: "Thunkable",
         url: "https://thunkable.com/",
-        icon: "/lovable-uploads/414562a0-bc63-4d90-ad88-a6f39add6aac.png",
         color: "bg-teal-100 hover:bg-teal-200",
       },
     ],
@@ -49,13 +57,11 @@ const toolBlocks = [
       {
         name: "Tynker",
         url: "https://www.tynker.com/#/join/classcode/",
-        icon: "/lovable-uploads/414562a0-bc63-4d90-ad88-a6f39add6aac.png",
         color: "bg-blue-100 hover:bg-blue-200",
       },
       {
         name: "Code.org",
         url: "https://www.code.org/",
-        icon: "/lovable-uploads/a0ee7f5e-7d91-46e2-b501-aad3f36b4398.png",
         color: "bg-indigo-100 hover:bg-indigo-200",
       },
     ],
@@ -66,13 +72,11 @@ const toolBlocks = [
       {
         name: "TinkerCAD Electronics",
         url: "https://www.tinkercad.com/",
-        icon: "/lovable-uploads/d09ee496-38e9-4fbb-8a39-ed4fbeafc3a3.png",
         color: "bg-blue-100 hover:bg-blue-200",
       },
       {
         name: "TinkerCAD 3D Modeling",
         url: "https://www.tinkercad.com/joinclass",
-        icon: "/lovable-uploads/d09ee496-38e9-4fbb-8a39-ed4fbeafc3a3.png",
         color: "bg-cyan-100 hover:bg-cyan-200",
       },
     ],
@@ -83,13 +87,11 @@ const toolBlocks = [
       {
         name: "Teachable Machines",
         url: "https://teachablemachine.withgoogle.com/",
-        icon: "/lovable-uploads/414562a0-bc63-4d90-ad88-a6f39add6aac.png",
         color: "bg-purple-100 hover:bg-purple-200",
       },
       {
         name: "Machine Learning for Kids",
         url: "https://machinelearningforkids.co.uk/",
-        icon: "/lovable-uploads/d09ee496-38e9-4fbb-8a39-ed4fbeafc3a3.png",
         color: "bg-pink-100 hover:bg-pink-200",
       },
     ],
@@ -100,7 +102,6 @@ const toolBlocks = [
       {
         name: "PhET Simulations",
         url: "https://phet.colorado.edu/",
-        icon: "/lovable-uploads/a0ee7f5e-7d91-46e2-b501-aad3f36b4398.png",
         color: "bg-orange-100 hover:bg-orange-200",
       },
     ],
@@ -111,7 +112,6 @@ const toolBlocks = [
       {
         name: "CoSpaces Edu",
         url: "https://cospaces.io/edu/",
-        icon: "/lovable-uploads/414562a0-bc63-4d90-ad88-a6f39add6aac.png",
         color: "bg-violet-100 hover:bg-violet-200",
       },
     ],
@@ -186,8 +186,18 @@ const StudentDashboard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-full mb-10">
           {toolBlocks.map((block) => (
             <Card key={block.title} className="shadow-lg border-blue-100">
-              <CardHeader>
-                <CardTitle className="text-stemblue text-xl">
+              <CardHeader className="flex flex-row items-center gap-3">
+                {/* Domain block icon */}
+                {block.title === "Science Simulations" ? (
+                  <ScienceIcon className="w-10 h-10 rounded shadow" />
+                ) : domainIcons[block.title] ? (
+                  <img
+                    src={domainIcons[block.title] as string}
+                    alt={`${block.title} icon`}
+                    className="w-10 h-10 rounded shadow"
+                  />
+                ) : null}
+                <CardTitle className="text-stemblue text-xl flex-1">
                   {block.title}
                 </CardTitle>
               </CardHeader>
@@ -201,14 +211,17 @@ const StudentDashboard = () => {
                       rel="noopener noreferrer"
                       className={`flex flex-col items-center gap-1 justify-center ${tool.color} px-3 py-4 rounded-lg shadow-md transition hover:scale-105 active:scale-95 border-2 border-blue-100 hover:border-accent w-32`}
                     >
-                      {tool.name === "PhET Simulations" ? (
+                      {/* Show domain icon for first tool in block, plain for others */}
+                      {block.title === "Science Simulations" ? (
                         <ScienceIcon className="w-10 h-10 rounded shadow" />
-                      ) : (
+                      ) : domainIcons[block.title] && tool === block.tools[0] ? (
                         <img
-                          src={tool.icon}
+                          src={domainIcons[block.title] as string}
                           className="w-10 h-10 rounded shadow"
-                          alt={tool.name}
+                          alt={`${block.title} domain`}
                         />
+                      ) : (
+                        <span className="w-10 h-10" />
                       )}
                       <span className="text-base font-semibold text-stemblue text-center">
                         {tool.name}
