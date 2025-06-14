@@ -1,4 +1,3 @@
-
 import { useSession } from "@/hooks/useSession";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -173,6 +172,17 @@ const StudentDashboard = () => {
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-yellow-50 via-white to-blue-50 animate-fade-in pb-12">
       <div className="w-full max-w-4xl mx-auto mt-8 mb-2 flex flex-col items-center">
+        {/* Home Button on Dashboard */}
+        <div className="w-full flex justify-end mb-2">
+          <Button
+            onClick={() => navigate("/")}
+            variant="secondary"
+            className="bg-[#ffecd0] text-[#263868] hover:bg-[#ffce27] font-semibold rounded-md border border-blue-100 shadow-sm px-4 py-2"
+            size="sm"
+          >
+            Home
+          </Button>
+        </div>
         <h2 className="text-3xl md:text-4xl font-bold font-playfair text-stemblue mb-4">
           Welcome to STEMverse Tools
         </h2>
