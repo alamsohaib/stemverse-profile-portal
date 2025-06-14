@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Sparkle, Rocket, Brain, Code, Atom, MousePointerClick } from "lucide-react";
@@ -22,10 +21,10 @@ const Section = ({
 
 const HomeHero = () => (
   <Section id="home" bg="bg-gradient-to-b from-yellow-50 to-blue-50">
-    <div className="relative flex flex-col md:flex-row-reverse items-center justify-between gap-8 max-w-6xl mx-auto px-4">
-      {/* Futuristic Video Background: fills the section, behind all content */}
+    <div className="relative flex flex-col md:flex-row-reverse items-center justify-between gap-8 max-w-6xl mx-auto px-4 min-h-[67vh]">
+      {/* Futuristic Video Background Layer */}
       <video
-        className="absolute inset-0 w-full h-full object-cover z-[-2] rounded-none"
+        className="absolute inset-0 w-full h-full object-cover z-[-2] pointer-events-none"
         autoPlay
         muted
         loop
@@ -34,17 +33,18 @@ const HomeHero = () => (
         style={{
           minHeight: "100%",
           minWidth: "100%",
+          opacity: 0.86,
+          filter: "brightness(1.07) saturate(1.13)",
         }}
       >
-        {/* Free futuristic background video source, can be swapped out! */}
+        {/* Example futuristic public video – you can swap source with another if you like */}
         <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-digital-background-with-blue-and-purple-light-1175-large.mp4" type="video/mp4" />
-        {/* fallback for browsers that don't support video */}
         Your browser does not support the video tag.
       </video>
-      {/* Subtle overlay for contrast */}
-      <div className="absolute inset-0 z-[-1] bg-gradient-to-b from-yellow-50/60 via-blue-50/60 to-white/70 pointer-events-none" />
-      {/* Logo with seamless transparent background */}
-      <div className="relative">
+      {/* Extra Subtle overlay for readability */}
+      <div className="absolute inset-0 z-[-1] pointer-events-none bg-gradient-to-b from-yellow-50/70 via-blue-100/70 to-white/90" />
+      {/* Logo with seamless transparency, never covered or boxed */}
+      <div className="relative z-10">
         <img
           src="/lovable-uploads/37e6260b-26c7-4bdf-9453-1d5ba1c39f7b.png"
           alt="STEMverse logo"
@@ -54,16 +54,16 @@ const HomeHero = () => (
             shadow-2xl
             transition-transform duration-300
             hover:scale-105
-            "
+          "
           style={{
             objectFit: "contain",
             background: "transparent",
-            // Modern soft-glow, embossed effect
-            filter: "drop-shadow(0 8px 32px rgba(38,56,104,0.35)) drop-shadow(0 2px 8px rgba(255, 224, 102,0.08))",
+            filter: "drop-shadow(0 8px 32px rgba(38,56,104,0.35)) drop-shadow(0 2px 8px rgba(255, 224, 102,0.08))"
           }}
         />
       </div>
-      <div className="flex flex-col items-start gap-4 max-w-xl z-10">
+      {/* Main content, always on top */}
+      <div className="flex flex-col items-start gap-4 max-w-xl z-20">
         <h1 className="text-4xl md:text-6xl font-playfair font-bold text-stemblue mb-1 tracking-tight drop-shadow">
           Unlocking <span className="text-yellow-500">endless possibilities</span> to empower young innovators.
         </h1>
