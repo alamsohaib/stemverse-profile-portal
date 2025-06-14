@@ -26,3 +26,4 @@ const ScienceIcon: React.FC<{ className?: string }> = ({ className = "w-10 h-10"
 );
 
 export default ScienceIcon;
+
