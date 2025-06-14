@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Sparkle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { NavLink, useNavigate } from "react-router-dom";
 
@@ -9,10 +8,15 @@ const NavBar = () => {
 
   return (
     <nav className="w-full flex items-center justify-between py-4 px-6 bg-white/80 shadow-md border-b border-blue-100 sticky top-0 z-30">
-      {/* Logo - top left */}
-      <NavLink to="/" className="flex items-center font-bold text-xl text-stemblue hover:scale-105 transition">
-        <Sparkle className="mr-2 w-6 h-6 text-yellow-500" />
-        STEMverse
+      {/* Logo + name, left */}
+      <NavLink to="/" className="flex items-center font-bold text-xl text-stemblue hover:scale-105 transition gap-2">
+        <img
+          src="/lovable-uploads/829409f4-ab09-41be-90c0-d40a0f6e4712.png"
+          alt="STEMverse Logo"
+          className="w-10 h-10 object-contain"
+          style={{ marginRight: 0 }}
+        />
+        <span className="font-playfair tracking-wide">STEMverse</span>
       </NavLink>
       {/* Center navigation links */}
       <div className="flex items-center gap-8">
@@ -63,4 +67,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
