@@ -1,8 +1,9 @@
+
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Sparkle, Rocket, Brain, Code, Atom, MousePointerClick } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import AnimatedKidsRobots from "./AnimatedKidsRobots";
+// Removed: import AnimatedKidsRobots from "./AnimatedKidsRobots";
 
 const Section = ({
   id,
@@ -23,9 +24,18 @@ const Section = ({
 const HomeHero = () => (
   <Section id="home" bg="bg-gradient-to-b from-yellow-50 to-blue-50">
     <div className="flex flex-col md:flex-row-reverse items-center justify-between gap-8 max-w-6xl mx-auto px-4">
-      {/* Replaced logo with animated vector illustration */}
-      <div className="relative flex items-center justify-center">
-        <AnimatedKidsRobots />
+      {/* Big hero vector image */}
+      <div className="relative flex items-center justify-center max-w-[480px] w-full md:w-[420px] lg:w-[520px]">
+        <img
+          src="/lovable-uploads/a0ee7f5e-7d91-46e2-b501-aad3f36b4398.png"
+          alt="Kids playing with robots"
+          className="w-full h-auto rounded-3xl shadow-xl border-4 border-yellow-100 bg-white animate-fade-in"
+          style={{
+            objectFit: "contain",
+            minHeight: "300px", minWidth: "280px",
+            maxHeight: "420px"
+          }}
+        />
       </div>
       <div className="flex flex-col items-start gap-4 max-w-xl">
         <h1 className="text-4xl md:text-6xl font-playfair font-bold text-stemblue mb-1 tracking-tight">
