@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Sparkle, Rocket, Brain, Code, Atom, MousePointerClick } from "lucide-react";
@@ -24,16 +23,17 @@ const Section = ({
 const HomeHero = () => (
   <Section id="home" bg="bg-gradient-to-b from-yellow-50 to-blue-50">
     <div className="flex flex-col md:flex-row-reverse items-center justify-between gap-8 max-w-6xl mx-auto px-4">
-      {/* Big hero vector image */}
-      <div className="relative flex items-center justify-center max-w-[480px] w-full md:w-[420px] lg:w-[520px]">
+      {/* Big hero vector image - now flush with background and floating */}
+      <div className="relative flex items-center justify-center max-w-[540px] w-full md:w-[480px] lg:w-[660px]">
         <img
           src="/lovable-uploads/a0ee7f5e-7d91-46e2-b501-aad3f36b4398.png"
           alt="Kids playing with robots"
-          className="w-full h-auto rounded-3xl shadow-xl border-4 border-yellow-100 bg-white animate-fade-in"
+          className="w-full h-auto animate-floating"
           style={{
             objectFit: "contain",
-            minHeight: "300px", minWidth: "280px",
-            maxHeight: "420px"
+            minHeight: "300px",
+            minWidth: "280px",
+            maxHeight: "660px"
           }}
         />
       </div>
@@ -54,6 +54,19 @@ const HomeHero = () => (
         </Button>
       </div>
     </div>
+    {/* Add custom floating animation */}
+    <style>{`
+      @keyframes floating {
+        0% { transform: translateY(0px);}
+        30% { transform: translateY(-18px);}
+        50% { transform: translateY(-10px);}
+        70% { transform: translateY(-22px);}
+        100% { transform: translateY(0px);}
+      }
+      .animate-floating {
+        animation: floating 5s ease-in-out infinite;
+      }
+    `}</style>
   </Section>
 );
 
