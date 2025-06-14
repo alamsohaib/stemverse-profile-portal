@@ -7,6 +7,23 @@ import { useNavigate } from "react-router-dom";
 import { useSession } from "@/hooks/useSession";
 import { toast } from "@/components/ui/use-toast";
 
+const gradeOptions = [
+  "Pre-K",
+  "Kindergarten",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+];
+
 const AuthPage = () => {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
@@ -14,6 +31,14 @@ const AuthPage = () => {
   const { session, user } = useSession();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
+
+  // New fields for signup
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [guardianName, setGuardianName] = useState("");
+  const [schoolName, setSchoolName] = useState("");
+  const [grade, setGrade] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   // If already logged in, go to dashboard
   if (user) {
@@ -26,19 +51,49 @@ const AuthPage = () => {
     setSubmitting(true);
 
     if (mode === "signup") {
-      // Use email redirect as required by supabase
-      const { error } = await supabase.auth.signUp({
+      if (!name) {
+        toast({ title: "Name is required" });
+        setSubmitting(false);
+        return;
+      }
+      // 1. Sign up the user in Supabase
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: { emailRedirectTo: `${window.location.origin}/dashboard` },
       });
-      setSubmitting(false);
       if (error) {
+        setSubmitting(false);
         toast({ title: "Signup failed", description: error.message });
-      } else {
-        toast({ title: "Signup successful!", description: "Check your email for a confirmation link." });
-        setMode("login");
+        return;
       }
+      // 2. If sign up successful, insert profile record
+      const userId = data.user?.id;
+      if (userId) {
+        const { error: profileError } = await supabase.from("profiles").insert([
+          {
+            id: userId,
+            name,
+            age: age ? Number(age) : null,
+            guardian_name: guardianName || null,
+            school_name: schoolName || null,
+            grade: grade || null,
+            phone_number: phoneNumber || null,
+          },
+        ]);
+        if (profileError) {
+          toast({
+            title: "Profile creation failed",
+            description: profileError.message,
+          });
+        }
+      }
+      setSubmitting(false);
+      toast({
+        title: "Signup successful!",
+        description: "Check your email for a confirmation link.",
+      });
+      setMode("login");
       return;
     }
 
@@ -60,6 +115,55 @@ const AuthPage = () => {
           {mode === "login" ? "Student Login" : "Create Your STEMverse Account"}
         </h2>
         <form onSubmit={handleAuth} className="flex flex-col gap-4">
+          {mode === "signup" && (
+            <>
+              <Input
+                type="text"
+                placeholder="Full Name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <Input
+                type="number"
+                min="4"
+                max="120"
+                placeholder="Age"
+                value={age}
+                onChange={(e) => setAge(e.target.value)}
+              />
+              <Input
+                type="text"
+                placeholder="Guardian Name"
+                value={guardianName}
+                onChange={(e) => setGuardianName(e.target.value)}
+              />
+              <Input
+                type="text"
+                placeholder="School Name"
+                value={schoolName}
+                onChange={(e) => setSchoolName(e.target.value)}
+              />
+              <select
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base"
+                value={grade}
+                onChange={(e) => setGrade(e.target.value)}
+              >
+                <option value="">Select Grade</option>
+                {gradeOptions.map((g) => (
+                  <option key={g} value={g}>
+                    {g}
+                  </option>
+                ))}
+              </select>
+              <Input
+                type="tel"
+                placeholder="Phone Number"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+              />
+            </>
+          )}
           <Input
             type="email"
             placeholder="Email"
@@ -85,7 +189,13 @@ const AuthPage = () => {
             className="mt-2 bg-stemblue rounded-lg hover:bg-accent text-white transition w-full"
             disabled={submitting}
           >
-            {submitting ? (mode === "signup" ? "Signing up..." : "Logging in...") : (mode === "signup" ? "Sign Up" : "Log In")}
+            {submitting
+              ? mode === "signup"
+                ? "Signing up..."
+                : "Logging in..."
+              : mode === "signup"
+              ? "Sign Up"
+              : "Log In"}
           </Button>
         </form>
         <div className="text-center text-sm mt-6 text-muted-foreground">
@@ -119,3 +229,4 @@ const AuthPage = () => {
 };
 
 export default AuthPage;
+
