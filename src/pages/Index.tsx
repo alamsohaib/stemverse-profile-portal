@@ -1,18 +1,12 @@
 
-// STEMverse Profile Home Page
-
-import ProfileHero from "../components/ProfileHero";
-import AboutCard from "../components/AboutCard";
-import TeamSection from "../components/TeamSection";
-import ContactCard from "../components/ContactCard";
+import NavBar from "../components/NavBar";
+import OnePageSections from "../components/OnePageSections";
 
 const Index = () => {
   return (
-    <main className="w-full min-h-screen flex flex-col items-center justify-start bg-background">
-      <ProfileHero />
-      <AboutCard />
-      <TeamSection />
-      <ContactCard />
+    <main className="w-full flex flex-col items-center bg-background min-h-screen">
+      <NavBar />
+      <OnePageSections />
     </main>
   );
 };
