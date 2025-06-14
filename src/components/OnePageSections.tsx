@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Sparkle, Rocket, Brain, Code, Atom, MousePointerClick } from "lucide-react";
@@ -21,53 +22,41 @@ const Section = ({
 
 const HomeHero = () => (
   <Section id="home" bg="bg-gradient-to-b from-yellow-50 to-blue-50">
-    <div className="relative flex flex-col md:flex-row-reverse items-center justify-between gap-8 max-w-6xl mx-auto px-4 min-h-[67vh]">
-      {/* Futuristic Video Background Layer */}
-      <video
-        className="absolute inset-0 w-full h-full object-cover z-[-2] pointer-events-none"
-        autoPlay
-        muted
-        loop
-        playsInline
-        poster=""
-        style={{
-          minHeight: "100%",
-          minWidth: "100%",
-          opacity: 0.86,
-          filter: "brightness(1.07) saturate(1.13)",
-        }}
-      >
-        {/* Example futuristic public video – you can swap source with another if you like */}
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-digital-background-with-blue-and-purple-light-1175-large.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
-      {/* Extra Subtle overlay for readability */}
-      <div className="absolute inset-0 z-[-1] pointer-events-none bg-gradient-to-b from-yellow-50/70 via-blue-100/70 to-white/90" />
-      {/* Logo with seamless transparency, never covered or boxed */}
-      <div className="relative z-10">
+    <div className="flex flex-col md:flex-row-reverse items-center justify-between gap-8 max-w-6xl mx-auto px-4">
+      <div className="relative">
         <img
-          src="/lovable-uploads/37e6260b-26c7-4bdf-9453-1d5ba1c39f7b.png"
+          src="/lovable-uploads/414562a0-bc63-4d90-ad88-a6f39add6aac.png"
           alt="STEMverse logo"
           className="
-            w-40 h-40 md:w-64 md:h-64
-            drop-shadow-2xl
-            shadow-2xl
-            transition-transform duration-300
+            w-36 h-36 md:w-56 md:h-56 drop-shadow-xl md:drop-shadow-2xl
+            rounded-xl md:rounded-2xl
+            bg-gradient-to-br from-yellow-100/60 via-transparent to-blue-100/40
+            shadow-lg md:shadow-2xl
+            ring-2 ring-yellow-300/10
+            transition-all duration-300
             hover:scale-105
-          "
+            "
           style={{
             objectFit: "contain",
-            background: "transparent",
-            filter: "drop-shadow(0 8px 32px rgba(38,56,104,0.35)) drop-shadow(0 2px 8px rgba(255, 224, 102,0.08))"
+            background: "none", // this ensures box is transparent if png supports it
+            boxShadow:
+              "0 8px 32px 0 rgba(38,56,104,0.25), 0 1.5px 4px 0 rgba(0,0,0,0.08)", // embossed effect
+            border: "none"
+          }}
+        />
+        {/* Subtle glowing circle behind, for more 'one piece' modern/embossed feel */}
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none z-[-1] blur-[10px]"
+          style={{
+            background: "radial-gradient(circle, #FFE06655 40%, #e1ecfc22 82%)",
           }}
         />
       </div>
-      {/* Main content, always on top */}
-      <div className="flex flex-col items-start gap-4 max-w-xl z-20">
-        <h1 className="text-4xl md:text-6xl font-playfair font-bold text-stemblue mb-1 tracking-tight drop-shadow">
+      <div className="flex flex-col items-start gap-4 max-w-xl">
+        <h1 className="text-4xl md:text-6xl font-playfair font-bold text-stemblue mb-1 tracking-tight">
           Unlocking <span className="text-yellow-500">endless possibilities</span> to empower young innovators.
         </h1>
-        <p className="text-lg md:text-xl text-muted-foreground font-medium bg-white/60 backdrop-blur rounded-xl px-2 py-1">
+        <p className="text-lg md:text-xl text-muted-foreground font-medium">
           Empowering everyone with skills for the future—kids, teens, teachers, and adults.<br />
           <span className="text-blue-600">#STEMverse</span>
         </p>
