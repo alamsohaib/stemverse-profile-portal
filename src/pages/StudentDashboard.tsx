@@ -16,9 +16,9 @@ import ScienceIcon from "@/components/ScienceIcon";
 
 // Domain icons for blocks
 const domainIcons: Record<string, string | null> = {
-  "Game Development": "/lovable-uploads/1ecf0702-eaa5-4283-9bb5-ff187df825bf.png",
+  "Game Development": "/lovable-uploads/7ba6385a-c8dc-41a4-9d8e-a66a276a8735.png", // new icon
   "App Development": "/lovable-uploads/916481b5-e79f-4443-bbe3-028d14554614.png",
-  "Programming": "/lovable-uploads/c6f848dc-aeef-4997-afcc-adfde94ce539.png",
+  "Programming": "/lovable-uploads/df896daa-5e39-4fad-9f57-064c8e989cb5.png", // new icon
   "3D Modeling & Electronics": "/lovable-uploads/0f6280c4-a4bc-4aa3-ad86-61a54419d717.png",
   "Artificial Intelligence": "/lovable-uploads/08094218-4b61-4ccf-8daf-b73c67a00d54.png",
   "Science Simulations": null, // handled by custom SVG ScienceIcon
