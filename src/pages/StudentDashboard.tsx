@@ -1,4 +1,3 @@
-
 import { useSession } from "@/hooks/useSession";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -12,6 +11,7 @@ import {
   CardTitle,
   CardContent,
 } from "@/components/ui/card";
+import ScienceIcon from "@/components/ScienceIcon";
 
 // Define tools by category
 const toolBlocks = [
@@ -201,11 +201,15 @@ const StudentDashboard = () => {
                       rel="noopener noreferrer"
                       className={`flex flex-col items-center gap-1 justify-center ${tool.color} px-3 py-4 rounded-lg shadow-md transition hover:scale-105 active:scale-95 border-2 border-blue-100 hover:border-accent w-32`}
                     >
-                      <img
-                        src={tool.icon}
-                        className="w-10 h-10 rounded shadow"
-                        alt={tool.name}
-                      />
+                      {tool.name === "PhET Simulations" ? (
+                        <ScienceIcon className="w-10 h-10 rounded shadow" />
+                      ) : (
+                        <img
+                          src={tool.icon}
+                          className="w-10 h-10 rounded shadow"
+                          alt={tool.name}
+                        />
+                      )}
                       <span className="text-base font-semibold text-stemblue text-center">
                         {tool.name}
                       </span>
@@ -230,4 +234,3 @@ const StudentDashboard = () => {
 };
 
 export default StudentDashboard;
-
