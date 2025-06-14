@@ -6,17 +6,18 @@ import { NavLink, useNavigate } from "react-router-dom";
 const NavBar = () => {
   const navigate = useNavigate();
 
-  // Colors based on logo: dark blue (#263868) and gold (#FFCE27 or similar)
-  const navBg = "bg-[#24325f]/95"; // slightly darkened logo blue with some opacity
-  const navShadow = "shadow-lg border-b border-[#ffce27]/30"; // gold soft shadow
+  // Use a light gold/white blend as background so logo pops, and blue/gold for accents
+  const navBg = "bg-white/85"; // Lighter background for logo visibility
+  const navShadow = "shadow-lg border-b border-[#ffce27]/30";
   const linkBase = "font-medium text-base px-2 py-1 rounded transition";
-  const activeLink = "text-[#ffbe3f] underline underline-offset-4 bg-[#263868]/80"; // gold/yellow active text, deep blue bg
-  const inactiveLink = "text-white hover:text-[#ffbe3f] hover:bg-[#263868]/60";
+  // On white, blue looks more crisp; gold for highlight
+  const activeLink = "text-[#263868] underline underline-offset-4 bg-[#ffecd0]/80"; // deep blue text, pale gold bg
+  const inactiveLink = "text-[#263868] hover:text-[#FFCE27] hover:bg-[#e4eafd]"; // blue with gold hover
 
   return (
     <nav className={`w-full flex items-center justify-between py-3 px-6 ${navBg} ${navShadow} sticky top-0 z-30`}>
       {/* Logo + name, left */}
-      <NavLink to="/" className="flex items-center font-bold text-xl text-white hover:scale-105 transition gap-2">
+      <NavLink to="/" className="flex items-center font-bold text-xl text-[#263868] hover:scale-105 transition gap-2">
         <img
           src="/lovable-uploads/829409f4-ab09-41be-90c0-d40a0f6e4712.png"
           alt="STEMverse Logo"
@@ -73,7 +74,7 @@ const NavBar = () => {
       <div>
         <Button
           onClick={() => navigate("/auth")}
-          className="bg-[#ffce27] text-[#263868] hover:bg-[#edae10] rounded-md shadow font-bold border-2 border-[#263868]/30"
+          className="bg-[#263868] text-[#ffce27] hover:bg-[#3851a6] hover:text-[#fff] rounded-md shadow font-bold border-2 border-[#263868]/15"
           size="sm"
         >
           Student Login

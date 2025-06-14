@@ -5,7 +5,7 @@
 
 @layer base {
   :root {
-    --background: 220 20% 98%;
+    --background: 45 80% 97%;     /* very pale gold */
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
@@ -14,16 +14,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 60% 23%;
+    --primary: 226 45% 32%;        /* brand blue */
     --primary-foreground: 210 40% 98%;
 
-    --secondary: 210 40% 96.1%;
+    --secondary: 45 95% 93%;       /* light gold/offwhite */
     --secondary-foreground: 222.2 47.4% 11.2%;
 
-    --muted: 210 40% 96.1%;
+    --muted: 212 40% 97%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 207 90% 64%;
+    --accent: 45 100% 71%;         /* gold accent */
     --accent-foreground: 222.2 47.4% 11.2%;
 
     --destructive: 0 84.2% 60.2%;
@@ -37,9 +37,11 @@
 
   body {
     @apply bg-background text-foreground font-sans min-h-screen antialiased;
-    background: 
-      radial-gradient(at 80% 10%, #b7c7f7 0px, transparent 60%),
-      linear-gradient(145deg, #f4f7fa 0 60%, #dde7f4 100%);
+    background:
+      /* upmost: gentle gold to white, then soft blue fade outwards */
+      radial-gradient(at 75% 0%, #fff7e0 0px, transparent 70%),
+      radial-gradient(at 10% 96%, #dde7f4 0px, transparent 70%),
+      linear-gradient(120deg, #fffde8 40%, #e4eafd 100%);
   }
 
   h1,h2,h3,.heading {
