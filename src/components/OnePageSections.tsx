@@ -1,8 +1,8 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Sparkle, Rocket, Brain, Code, Atom, MousePointerClick } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AnimatedKidsRobots from "./AnimatedKidsRobots";
 
 const Section = ({
   id,
@@ -23,34 +23,9 @@ const Section = ({
 const HomeHero = () => (
   <Section id="home" bg="bg-gradient-to-b from-yellow-50 to-blue-50">
     <div className="flex flex-col md:flex-row-reverse items-center justify-between gap-8 max-w-6xl mx-auto px-4">
-      <div className="relative">
-        <img
-          src="/lovable-uploads/414562a0-bc63-4d90-ad88-a6f39add6aac.png"
-          alt="STEMverse logo"
-          className="
-            w-36 h-36 md:w-56 md:h-56 drop-shadow-xl md:drop-shadow-2xl
-            rounded-xl md:rounded-2xl
-            bg-gradient-to-br from-yellow-100/60 via-transparent to-blue-100/40
-            shadow-lg md:shadow-2xl
-            ring-2 ring-yellow-300/10
-            transition-all duration-300
-            hover:scale-105
-            "
-          style={{
-            objectFit: "contain",
-            background: "none", // this ensures box is transparent if png supports it
-            boxShadow:
-              "0 8px 32px 0 rgba(38,56,104,0.25), 0 1.5px 4px 0 rgba(0,0,0,0.08)", // embossed effect
-            border: "none"
-          }}
-        />
-        {/* Subtle glowing circle behind, for more 'one piece' modern/embossed feel */}
-        <div
-          className="absolute inset-0 rounded-full pointer-events-none z-[-1] blur-[10px]"
-          style={{
-            background: "radial-gradient(circle, #FFE06655 40%, #e1ecfc22 82%)",
-          }}
-        />
+      {/* Replaced logo with animated vector illustration */}
+      <div className="relative flex items-center justify-center">
+        <AnimatedKidsRobots />
       </div>
       <div className="flex flex-col items-start gap-4 max-w-xl">
         <h1 className="text-4xl md:text-6xl font-playfair font-bold text-stemblue mb-1 tracking-tight">
