@@ -23,11 +23,48 @@ const Section = ({
 const HomeHero = () => (
   <Section id="home" bg="bg-gradient-to-b from-yellow-50 to-blue-50">
     <div className="flex flex-col md:flex-row-reverse items-center justify-between gap-8 max-w-6xl mx-auto px-4">
-      <img src="/lovable-uploads/d09ee496-38e9-4fbb-8a39-ed4fbeafc3a3.png" alt="STEMverse logo" className="w-32 h-32 md:w-48 md:h-48 drop-shadow-lg" />
+      <div className="relative">
+        <img
+          src="/lovable-uploads/414562a0-bc63-4d90-ad88-a6f39add6aac.png"
+          alt="STEMverse logo"
+          className="
+            w-36 h-36 md:w-56 md:h-56 drop-shadow-xl md:drop-shadow-2xl
+            rounded-xl md:rounded-2xl
+            bg-gradient-to-br from-yellow-100/60 via-transparent to-blue-100/40
+            shadow-lg md:shadow-2xl
+            ring-2 ring-yellow-300/10
+            transition-all duration-300
+            hover:scale-105
+            "
+          style={{
+            objectFit: "contain",
+            background: "none", // this ensures box is transparent if png supports it
+            boxShadow:
+              "0 8px 32px 0 rgba(38,56,104,0.25), 0 1.5px 4px 0 rgba(0,0,0,0.08)", // embossed effect
+            border: "none"
+          }}
+        />
+        {/* Subtle glowing circle behind, for more 'one piece' modern/embossed feel */}
+        <div
+          className="absolute inset-0 rounded-full pointer-events-none z-[-1] blur-[10px]"
+          style={{
+            background: "radial-gradient(circle, #FFE06655 40%, #e1ecfc22 82%)",
+          }}
+        />
+      </div>
       <div className="flex flex-col items-start gap-4 max-w-xl">
-        <h1 className="text-4xl md:text-6xl font-playfair font-bold text-stemblue mb-1 tracking-tight">Unlocking <span className="text-yellow-500">endless possibilities</span> to empower young innovators.</h1>
-        <p className="text-lg md:text-xl text-muted-foreground font-medium">Empowering everyone with skills for the future—kids, teens, teachers, and adults.<br /><span className="text-blue-600">#STEMverse</span></p>
-        <Button size="lg" className="mt-2 bg-blue-400 hover:bg-yellow-400 text-white font-bold px-7 py-3 rounded-xl shadow-lg" onClick={() => document.getElementById("programs")?.scrollIntoView({behavior:"smooth"})}>
+        <h1 className="text-4xl md:text-6xl font-playfair font-bold text-stemblue mb-1 tracking-tight">
+          Unlocking <span className="text-yellow-500">endless possibilities</span> to empower young innovators.
+        </h1>
+        <p className="text-lg md:text-xl text-muted-foreground font-medium">
+          Empowering everyone with skills for the future—kids, teens, teachers, and adults.<br />
+          <span className="text-blue-600">#STEMverse</span>
+        </p>
+        <Button
+          size="lg"
+          className="mt-2 bg-blue-400 hover:bg-yellow-400 text-white font-bold px-7 py-3 rounded-xl shadow-lg"
+          onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" })}
+        >
           Explore Programs <Rocket className="ml-2" />
         </Button>
       </div>
