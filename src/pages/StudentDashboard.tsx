@@ -1,10 +1,10 @@
-
 import { useSession } from "@/hooks/useSession";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import { toast } from "@/components/ui/use-toast";
 import { LogOut } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const tools = [
   {
@@ -25,8 +25,39 @@ const tools = [
 const StudentDashboard = () => {
   const { user, loading } = useSession();
   const navigate = useNavigate();
+  const [statusChecked, setStatusChecked] = useState(false);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center text-stemblue">Loading...</div>;
+  useEffect(() => {
+    async function checkStatus() {
+      if (user) {
+        const { data: profile, error } = await supabase
+          .from("profiles")
+          .select("status")
+          .eq("id", user.id)
+          .maybeSingle();
+        if (error || !profile) {
+          toast({ title: "Unable to load profile", description: error?.message || "Profile not found." });
+          await supabase.auth.signOut();
+          navigate("/auth");
+          return;
+        }
+        if (profile.status !== "approved") {
+          toast({
+            title: "Account pending approval",
+            description: "Your account has not been approved by an admin yet.",
+          });
+          await supabase.auth.signOut();
+          navigate("/auth");
+          return;
+        }
+        setStatusChecked(true);
+      }
+    }
+    checkStatus();
+    // eslint-disable-next-line
+  }, [user]);
+
+  if (loading || (user && !statusChecked)) return <div className="min-h-screen flex items-center justify-center text-stemblue">Loading...</div>;
   if (!user) {
     navigate("/auth");
     return null;

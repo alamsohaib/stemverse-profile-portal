@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -67,7 +66,7 @@ const AuthPage = () => {
         toast({ title: "Signup failed", description: error.message });
         return;
       }
-      // 2. If sign up successful, insert profile record
+      // 2. If sign up successful, insert profile record with 'pending' status
       const userId = data.user?.id;
       if (userId) {
         const { error: profileError } = await supabase.from("profiles").insert([
@@ -79,6 +78,7 @@ const AuthPage = () => {
             school_name: schoolName || null,
             grade: grade || null,
             phone_number: phoneNumber || null,
+            status: 'pending',
           },
         ]);
         if (profileError) {
@@ -90,19 +90,43 @@ const AuthPage = () => {
       }
       setSubmitting(false);
       toast({
-        title: "Signup successful!",
-        description: "Check your email for a confirmation link.",
+        title: "Registration submitted!",
+        description:
+          "An admin will need to approve your account before you can log in.",
       });
       setMode("login");
       return;
     }
 
     // Login flow
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     setSubmitting(false);
     if (error) {
       toast({ title: "Login failed", description: error.message });
     } else {
+      // After login, check user's profile status
+      const userId = data.user.id;
+      const { data: profiles, error: fetchError } = await supabase
+        .from("profiles")
+        .select("status")
+        .eq("id", userId)
+        .maybeSingle();
+
+      if (fetchError || !profiles) {
+        toast({ title: "Profile fetch failed", description: fetchError?.message || "No profile found." });
+        await supabase.auth.signOut();
+        return;
+      }
+
+      if (profiles.status !== "approved") {
+        toast({
+          title: "Account not approved",
+          description: "Your account is pending admin approval.",
+        });
+        await supabase.auth.signOut();
+        return;
+      }
+
       toast({ title: "Logged in!", description: "Welcome back." });
       navigate("/dashboard");
     }
@@ -229,4 +253,3 @@ const AuthPage = () => {
 };
 
 export default AuthPage;
-
