@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -19,6 +18,8 @@ type Profile = {
   status: string;
 };
 
+const ADMIN_EMAIL = "kuratulain007@gmail.com";
+
 const AdminUserApprovalPage = () => {
   const { user, loading } = useSession();
   const [profiles, setProfiles] = useState<Profile[]>([]);
@@ -26,21 +27,15 @@ const AdminUserApprovalPage = () => {
   const [sortKey, setSortKey] = useState<keyof Profile>("status");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
 
-  // Only allow the 'very first' user by lowest UUID as the admin (you should replace this logic later!)
+  // Only allow the specified email to be the admin
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    async function checkAdmin() {
-      // Fetch all users, find the lowest UUID
-      const { data: allProfiles } = await supabase
-        .from("profiles")
-        .select("id")
-        .order("created_at", { ascending: true });
-      if (user && allProfiles && allProfiles[0]?.id === user.id) {
-        setIsAdmin(true);
-      }
+    if (user && user.email === ADMIN_EMAIL) {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
     }
-    if (user) checkAdmin();
   }, [user]);
 
   useEffect(() => {
