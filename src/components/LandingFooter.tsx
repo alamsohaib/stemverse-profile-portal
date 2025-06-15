@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Instagram, Linkedin, Facebook } from "lucide-react";
+import { Instagram, Linkedin, Facebook, Phone } from "lucide-react";
 
 const links = [
   { label: "Home", href: "/" },
@@ -16,20 +16,20 @@ const links = [
 const socials = [
   {
     icon: <Instagram className="w-5 h-5" />,
-    href: "https://instagram.com/mystemverse"
+    href: "https://www.instagram.com/mystemverse/"
   },
   {
     icon: <Linkedin className="w-5 h-5" />,
-    href: "https://linkedin.com/company/mystemverse"
+    href: "https://www.linkedin.com/company/mystemverse/"
   },
   {
     icon: <Facebook className="w-5 h-5" />,
-    href: "https://facebook.com/mystemverse"
+    href: "https://www.facebook.com/people/STEMverse/61558686323430/"
   }
 ];
 
 const LandingFooter = () => (
-  <footer className="w-full flex flex-col items-center gap-3 pt-8 pb-6 bg-[#f8f6ed] border-t border-blue-100 animate-fade-in">
+  <footer className="w-full flex flex-col items-center gap-4 pt-8 pb-6 bg-[#f8f6ed] border-t border-blue-100 animate-fade-in">
     <div className="flex flex-wrap justify-center gap-3 mb-2">
       {links.map(link => (
         <a
@@ -41,6 +41,22 @@ const LandingFooter = () => (
         </a>
       ))}
     </div>
+    
+    {/* Contact Information */}
+    <div className="flex flex-col items-center gap-2 mb-3">
+      <div className="flex items-center gap-2 text-stemblue">
+        <Phone className="w-4 h-4" />
+        <span className="text-sm font-medium">WhatsApp:</span>
+        <a href="https://wa.me/923020558423" className="text-sm hover:text-accent transition-colors">+92 302-0558423</a>
+        <span className="text-sm">|</span>
+        <a href="https://wa.me/923339116667" className="text-sm hover:text-accent transition-colors">+92 333-9116667</a>
+      </div>
+      <div className="text-sm text-stemblue">
+        <span className="font-medium">Email:</span> 
+        <a href="mailto:stemsverse@gmail.com" className="ml-1 hover:text-accent transition-colors">stemsverse@gmail.com</a>
+      </div>
+    </div>
+
     <div className="flex gap-4 mb-1">
       {socials.map(({ icon, href }) => (
         <a

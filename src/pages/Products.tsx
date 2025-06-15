@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import NavBar from "../components/NavBar";
 import LandingFooter from "../components/LandingFooter";
@@ -269,12 +268,12 @@ const Products = () => {
           {makerLabSetups.map((setup, index) => (
             <Card 
               key={setup.tier}
-              className={`bg-white/90 border-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-fade-in ${
+              className={`bg-white/90 border-2 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-fade-in flex flex-col h-full ${
                 index === 1 ? 'border-[#ffce27] ring-2 ring-[#ffce27]/30' : 'border-white/50'
               }`}
               style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <CardHeader>
+              <CardHeader className="flex-shrink-0">
                 <CardTitle className="text-xl font-bold text-[#263868]">
                   {setup.tier}
                   {index === 1 && (
@@ -285,8 +284,8 @@ const Products = () => {
                   Rs {setup.price.toLocaleString()}
                 </div>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-2 mb-6">
+              <CardContent className="flex flex-col flex-grow">
+                <div className="space-y-2 mb-6 flex-grow">
                   {setup.features.map((feature, idx) => (
                     <div key={idx} className="flex items-center text-gray-700">
                       <div className="w-2 h-2 bg-[#ffce27] rounded-full mr-2"></div>
@@ -294,16 +293,18 @@ const Products = () => {
                     </div>
                   ))}
                 </div>
-                <p className="text-sm text-gray-600 mb-4">
-                  Includes software installation, one-day teacher orientation, and support for 20 students at a time.
-                </p>
-                <Button 
-                  className="w-full bg-[#263868] text-white hover:bg-[#3851a6] font-bold"
-                  onClick={() => window.location.href = "mailto:stemsverse@gmail.com?subject=Maker Lab Setup Inquiry: " + setup.tier}
-                >
-                  <Mail className="w-4 h-4 mr-2" />
-                  Get Quote
-                </Button>
+                <div className="mt-auto">
+                  <p className="text-sm text-gray-600 mb-4">
+                    Includes software installation, one-day teacher orientation, and support for 20 students at a time.
+                  </p>
+                  <Button 
+                    className="w-full bg-[#263868] text-white hover:bg-[#3851a6] font-bold"
+                    onClick={() => window.location.href = "mailto:stemsverse@gmail.com?subject=Maker Lab Setup Inquiry: " + setup.tier}
+                  >
+                    <Mail className="w-4 h-4 mr-2" />
+                    Get Quote
+                  </Button>
+                </div>
               </CardContent>
             </Card>
           ))}
