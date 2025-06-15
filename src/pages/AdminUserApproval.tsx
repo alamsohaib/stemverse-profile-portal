@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -5,6 +6,8 @@ import { Table, TableHeader, TableBody, TableRow, TableCell, TableHead } from "@
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { useSession } from "@/hooks/useSession";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import AdminFeaturedHighlights from "@/components/AdminFeaturedHighlights";
 
 type Profile = {
   id: string;
@@ -95,64 +98,79 @@ const AdminUserApprovalPage = () => {
   if (!isAdmin) return <div>You do not have admin access.</div>;
 
   return (
-    <div className="max-w-4xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-lg">
-      <h2 className="text-3xl font-bold mb-6 text-stemblue">User Approvals</h2>
-      <div className="mb-4 flex items-center gap-2">
-        <Input
-          placeholder="Search students..."
-          value={search}
-          onChange={e => setSearch(e.target.value)}
-          className="max-w-sm"
-        />
-        <div className="ml-auto text-sm text-muted-foreground">
-          {profiles.length} users
-        </div>
-      </div>
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {["name", "age", "guardian_name", "school_name", "grade", "phone_number", "status"].map(col => (
-              <TableHead
-                key={col}
-                onClick={() => {
-                  if (sortKey === col) setSortDir(dir => dir === "asc" ? "desc" : "asc");
-                  // @ts-ignore
-                  else setSortKey(col);
-                }}
-                className="cursor-pointer"
-              >
-                {col.charAt(0).toUpperCase() + col.slice(1)} {sortKey === col ? (sortDir === "asc" ? "↑" : "↓") : ""}
-              </TableHead>
-            ))}
-            <TableHead>Action</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filtered.map(profile => (
-            <TableRow key={profile.id}>
-              <TableCell>{profile.name}</TableCell>
-              <TableCell>{profile.age}</TableCell>
-              <TableCell>{profile.guardian_name}</TableCell>
-              <TableCell>{profile.school_name}</TableCell>
-              <TableCell>{profile.grade}</TableCell>
-              <TableCell>{profile.phone_number}</TableCell>
-              <TableCell>
-                {profile.status === "pending" && <span className="text-yellow-500">Pending</span>}
-                {profile.status === "approved" && <span className="text-green-600">Approved</span>}
-                {profile.status === "rejected" && <span className="text-red-500">Rejected</span>}
-              </TableCell>
-              <TableCell>
-                {profile.status === "pending" && (
-                  <div className="flex gap-2">
-                    <Button onClick={() => handleApprove(profile.id)} size="sm" className="bg-green-500 text-white hover:bg-green-600">Approve</Button>
-                    <Button onClick={() => handleReject(profile.id)} size="sm" variant="destructive">Reject</Button>
-                  </div>
-                )}
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+    <div className="max-w-6xl mx-auto mt-10 bg-white p-6 rounded-xl shadow-lg">
+      <h1 className="text-3xl font-bold mb-6 text-stemblue">Admin Dashboard</h1>
+      
+      <Tabs defaultValue="users" className="w-full">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="users">User Approvals</TabsTrigger>
+          <TabsTrigger value="highlights">Featured Highlights</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="users" className="space-y-4">
+          <h2 className="text-2xl font-bold text-stemblue">User Approvals</h2>
+          <div className="mb-4 flex items-center gap-2">
+            <Input
+              placeholder="Search students..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="max-w-sm"
+            />
+            <div className="ml-auto text-sm text-muted-foreground">
+              {profiles.length} users
+            </div>
+          </div>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                {["name", "age", "guardian_name", "school_name", "grade", "phone_number", "status"].map(col => (
+                  <TableHead
+                    key={col}
+                    onClick={() => {
+                      if (sortKey === col) setSortDir(dir => dir === "asc" ? "desc" : "asc");
+                      // @ts-ignore
+                      else setSortKey(col);
+                    }}
+                    className="cursor-pointer"
+                  >
+                    {col.charAt(0).toUpperCase() + col.slice(1)} {sortKey === col ? (sortDir === "asc" ? "↑" : "↓") : ""}
+                  </TableHead>
+                ))}
+                <TableHead>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filtered.map(profile => (
+                <TableRow key={profile.id}>
+                  <TableCell>{profile.name}</TableCell>
+                  <TableCell>{profile.age}</TableCell>
+                  <TableCell>{profile.guardian_name}</TableCell>
+                  <TableCell>{profile.school_name}</TableCell>
+                  <TableCell>{profile.grade}</TableCell>
+                  <TableCell>{profile.phone_number}</TableCell>
+                  <TableCell>
+                    {profile.status === "pending" && <span className="text-yellow-500">Pending</span>}
+                    {profile.status === "approved" && <span className="text-green-600">Approved</span>}
+                    {profile.status === "rejected" && <span className="text-red-500">Rejected</span>}
+                  </TableCell>
+                  <TableCell>
+                    {profile.status === "pending" && (
+                      <div className="flex gap-2">
+                        <Button onClick={() => handleApprove(profile.id)} size="sm" className="bg-green-500 text-white hover:bg-green-600">Approve</Button>
+                        <Button onClick={() => handleReject(profile.id)} size="sm" variant="destructive">Reject</Button>
+                      </div>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TabsContent>
+        
+        <TabsContent value="highlights">
+          <AdminFeaturedHighlights />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 };

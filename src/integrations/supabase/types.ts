@@ -9,6 +9,51 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      featured_highlights: {
+        Row: {
+          button_text: string | null
+          button_url: string | null
+          created_at: string
+          description: string
+          display_order: number | null
+          duration: string
+          id: string
+          is_active: boolean | null
+          location: string
+          start_date: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          button_text?: string | null
+          button_url?: string | null
+          created_at?: string
+          description: string
+          display_order?: number | null
+          duration: string
+          id?: string
+          is_active?: boolean | null
+          location: string
+          start_date: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          button_text?: string | null
+          button_url?: string | null
+          created_at?: string
+          description?: string
+          display_order?: number | null
+          duration?: string
+          id?: string
+          is_active?: boolean | null
+          location?: string
+          start_date?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           age: number | null
