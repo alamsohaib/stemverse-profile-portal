@@ -8,11 +8,11 @@ const NewsletterSignup = () => (
       className="max-w-xl w-full bg-white/90 rounded-2xl border border-accent/20 shadow-md p-7 flex flex-col items-center gap-4 animate-fade-in"
       onSubmit={e => {
         e.preventDefault();
-        alert("Thank you for signing up! You'll receive updates about camps, workshops & resources.");
+        alert("Thank you for subscribing! You'll receive updates about camps, workshops & resources.");
       }}
     >
       <span className="text-lg font-bold text-stemblue mb-1 text-center">
-        Be first to know about camps, workshops & resources.
+        Be the first to hear about upcoming camps, workshops, and free STEM resources—join our mailing list today!
       </span>
       <input
         type="email"

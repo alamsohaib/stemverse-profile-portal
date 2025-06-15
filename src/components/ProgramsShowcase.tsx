@@ -2,6 +2,7 @@
 import React from "react";
 import { GraduationCap, Users, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 const programs = [
   {
@@ -27,32 +28,40 @@ const programs = [
   }
 ];
 
-const ProgramsShowcase = () => (
-  <section
-    id="programs"
-    className="w-full bg-gradient-to-tl from-[#f3ecd2] via-white to-blue-50 py-14 px-4"
-  >
-    <h2 className="text-3xl md:text-4xl font-playfair font-bold text-stemblue text-center mb-5">
-      Featured Programs
-    </h2>
-    <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-      {programs.map((p, i) => (
-        <div
-          className="flex flex-col items-start gap-3 px-7 py-8 rounded-2xl bg-white/90 border border-yellow-200 shadow
-            hover:shadow-lg hover:scale-[1.03] hover:bg-[#f7eee0] transition duration-200 group animate-fade-in min-h-[320px]"
-          key={p.title}
-        >
-          <div className="mb-2 transform group-hover:scale-110 transition-transform duration-200">{p.icon}</div>
-          <span className="text-lg font-bold text-stemblue">{p.title}</span>
-          <span className="text-accent font-medium">{p.subtitle}</span>
-          <span className="mt-1 text-sm text-gray-700 flex-grow">{p.desc}</span>
-          <Button size="sm" className="mt-auto px-4 py-2 rounded-lg bg-stemblue text-yellow-200 hover:bg-[#3851a6] shadow group-hover:border-accent/50">
-            Learn More
-          </Button>
-        </div>
-      ))}
-    </div>
-  </section>
-);
+const ProgramsShowcase = () => {
+  const navigate = useNavigate();
+
+  return (
+    <section
+      id="programs"
+      className="w-full bg-gradient-to-tl from-[#f3ecd2] via-white to-blue-50 py-14 px-4"
+    >
+      <h2 className="text-3xl md:text-4xl font-playfair font-bold text-stemblue text-center mb-5">
+        Featured Programs
+      </h2>
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
+        {programs.map((p, i) => (
+          <div
+            className="flex flex-col items-start gap-3 px-7 py-8 rounded-2xl bg-white/90 border border-yellow-200 shadow
+              hover:shadow-lg hover:scale-[1.03] hover:bg-[#f7eee0] transition duration-200 group animate-fade-in min-h-[320px]"
+            key={p.title}
+          >
+            <div className="mb-2 transform group-hover:scale-110 transition-transform duration-200">{p.icon}</div>
+            <span className="text-lg font-bold text-stemblue">{p.title}</span>
+            <span className="text-accent font-medium">{p.subtitle}</span>
+            <span className="mt-1 text-sm text-gray-700 flex-grow">{p.desc}</span>
+            <Button 
+              size="sm" 
+              className="mt-auto px-4 py-2 rounded-lg bg-stemblue text-yellow-200 hover:bg-[#3851a6] shadow group-hover:border-accent/50"
+              onClick={() => navigate("/programs")}
+            >
+              Learn More
+            </Button>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+};
 
 export default ProgramsShowcase;
