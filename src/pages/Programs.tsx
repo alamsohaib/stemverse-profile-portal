@@ -181,7 +181,7 @@ const Programs = () => {
                 {category.programs.map((program, index) => (
                   <Card 
                     key={index}
-                    className={`bg-gradient-to-br ${program.color} border-2 border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-fade-in`}
+                    className={`bg-gradient-to-br ${program.color} border-2 border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 animate-fade-in flex flex-col h-full`}
                   >
                     <CardHeader>
                       <div className="flex items-center mb-2">
@@ -194,11 +194,11 @@ const Programs = () => {
                         {program.subtitle}
                       </Badge>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="flex flex-col flex-grow">
                       <p className="text-gray-700 mb-4 leading-relaxed">
                         {program.description}
                       </p>
-                      <div className="space-y-2">
+                      <div className="space-y-2 flex-grow">
                         <h4 className="font-semibold text-[#263868]">Key Features:</h4>
                         <div className="grid grid-cols-1 gap-2">
                           {program.features.map((feature, idx) => (
@@ -235,20 +235,14 @@ const Programs = () => {
             <p className="text-xl mb-8 leading-relaxed max-w-3xl mx-auto">
               Bring STEMverse to your school or community through tailored camps, workshops, or year-long collaborations.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <Button 
-                className="bg-[#ffce27] text-[#263868] hover:bg-[#f7b800] font-bold px-8 py-3 text-lg"
-                size="lg"
-                onClick={() => window.location.href = "mailto:stemsverse@gmail.com"}
-              >
-                <Mail className="w-5 h-5 mr-2" />
-                Contact Us
-              </Button>
-              <div className="flex items-center text-[#ffce27]">
-                <Mail className="w-5 h-5 mr-2" />
-                <span>stemsverse@gmail.com</span>
-              </div>
-            </div>
+            <Button 
+              className="bg-[#ffce27] text-[#263868] hover:bg-[#f7b800] font-bold px-8 py-3 text-lg"
+              size="lg"
+              onClick={() => window.location.href = "mailto:mashaal@mystemverse.com"}
+            >
+              <Mail className="w-5 h-5 mr-2" />
+              Contact Us
+            </Button>
           </CardContent>
         </Card>
       </section>

@@ -9,7 +9,7 @@ const JoinFamilyCallout = () => (
         Whether you're a passionate STEM educator, a potential collaborator, or a school seeking innovative learning solutions, we'd love to work with you.
       </span>
       <a
-        href="mailto:quratulain@stemverse.com"
+        href="mailto:quratulain@mystemverse.com"
         className="text-accent hover:text-yellow-300 font-semibold underline mt-2"
       >
         Explore Instructor Roles & Partnership Opportunities
