@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,8 @@ const gradeOptions = [
   "12",
 ];
 
+const ADMIN_EMAIL = "kuratulain007@gmail.com";
+
 const AuthPage = () => {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
@@ -39,9 +42,13 @@ const AuthPage = () => {
   const [grade, setGrade] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  // If already logged in, go to dashboard
+  // If already logged in, redirect based on user type
   if (user) {
-    navigate("/dashboard");
+    if (user.email === ADMIN_EMAIL) {
+      navigate("/admin");
+    } else {
+      navigate("/dashboard");
+    }
     return null;
   }
 
@@ -104,7 +111,14 @@ const AuthPage = () => {
     if (error) {
       toast({ title: "Login failed", description: error.message });
     } else {
-      // After login, check user's profile status
+      // Check if user is admin
+      if (data.user.email === ADMIN_EMAIL) {
+        toast({ title: "Admin logged in!", description: "Welcome to the admin dashboard." });
+        navigate("/admin");
+        return;
+      }
+
+      // After login, check user's profile status for non-admin users
       const userId = data.user.id;
       const { data: profiles, error: fetchError } = await supabase
         .from("profiles")
