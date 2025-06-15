@@ -1,37 +1,27 @@
-
 import React from "react";
 import { Award, Target, Shield } from "lucide-react";
 
 const features = [
   {
-    icon: <Award className="w-8 h-8 text-[#FFCE27] animate-pulse" />,
+    icon: <Award className="w-8 h-8 text-[#FFCE27] animate-bounce" />,
     title: "Proven Partnerships",
     desc: (
       <>
         Top Schools, UNDP, NIC Peshawar, Women Techmakers, GIZ, OntarioTech
-        <div className="flex gap-3 mt-1 text-xs">
-          <a className="underline text-blue-700" href="https://behance.net" target="_blank">behance.net</a>
-          <span>+1</span>
-          <a className="underline text-pink-800" href="https://pinterest.com" target="_blank">pinterest.com</a>
-          <span>+1</span>
-        </div>
       </>
     )
   },
   {
-    icon: <Target className="w-8 h-8 text-[#263868] animate-bounce" />,
+    icon: <Target className="w-8 h-8 text-[#263868] animate-pulse" />,
     title: "Project-Based Methodology",
     desc: (
       <>
         Aligned with international STEM standards, learn by building, testing, and improving real-world projects.
-        <div className="mt-1 text-xs">
-          <a className="underline text-green-700" href="https://educationtothecore.com" target="_blank">educationtothecore.com</a>
-        </div>
       </>
     )
   },
   {
-    icon: <Shield className="w-8 h-8 text-accent animate-pulse" />,
+    icon: <Shield className="w-8 h-8 text-accent animate-bounce" />,
     title: "Safe, Culturally-Tailored Learning",
     desc: (
       <>Age-appropriate, locally relevant content delivered in secure, inclusive, and well-guided learning environments.</>
