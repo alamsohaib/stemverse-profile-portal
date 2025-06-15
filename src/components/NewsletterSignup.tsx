@@ -27,14 +27,14 @@ const NewsletterSignup = () => {
   };
 
   return (
-    <section className="w-full flex justify-center py-12 px-4 bg-gradient-to-br from-purple-400 via-purple-500 to-purple-600">
-      <Card className="max-w-2xl w-full bg-purple-400/90 border-none shadow-xl">
+    <section className="w-full flex justify-center py-12 px-4 bg-gradient-to-br from-[#f3f6fb] via-white to-[#ddebf7]">
+      <Card className="max-w-2xl w-full bg-white/90 border-2 border-[#ffce27]/30 shadow-xl">
         <CardContent className="p-8">
           <div className="text-center mb-8">
-            <h2 className="text-4xl md:text-5xl font-bold text-black mb-4">
+            <h2 className="text-4xl md:text-5xl font-bold text-[#263868] mb-4">
               Send Message
             </h2>
-            <p className="text-black/80 text-lg">
+            <p className="text-[#263868]/80 text-lg">
               Have Questions? Reach out. We'd love to assist!
             </p>
           </div>
@@ -47,7 +47,7 @@ const NewsletterSignup = () => {
               value={formData.name}
               onChange={handleInputChange}
               required
-              className="w-full py-4 px-6 rounded-full border-2 border-black/20 bg-purple-300/50 placeholder:text-black/60 text-black text-lg focus:ring-2 focus:ring-purple-700 focus:border-transparent"
+              className="w-full py-4 px-6 rounded-full border-2 border-[#ffce27]/40 bg-[#f3f6fb]/70 placeholder:text-[#263868]/60 text-[#263868] text-lg focus:ring-2 focus:ring-[#263868] focus:border-[#263868]"
             />
             
             <Input
@@ -57,7 +57,7 @@ const NewsletterSignup = () => {
               value={formData.email}
               onChange={handleInputChange}
               required
-              className="w-full py-4 px-6 rounded-full border-2 border-black/20 bg-purple-300/50 placeholder:text-black/60 text-black text-lg focus:ring-2 focus:ring-purple-700 focus:border-transparent"
+              className="w-full py-4 px-6 rounded-full border-2 border-[#ffce27]/40 bg-[#f3f6fb]/70 placeholder:text-[#263868]/60 text-[#263868] text-lg focus:ring-2 focus:ring-[#263868] focus:border-[#263868]"
             />
             
             <textarea
@@ -67,12 +67,12 @@ const NewsletterSignup = () => {
               onChange={handleInputChange}
               required
               rows={6}
-              className="w-full py-4 px-6 rounded-3xl border-2 border-black/20 bg-purple-300/50 placeholder:text-black/60 text-black text-lg focus:ring-2 focus:ring-purple-700 focus:border-transparent resize-none"
+              className="w-full py-4 px-6 rounded-3xl border-2 border-[#ffce27]/40 bg-[#f3f6fb]/70 placeholder:text-[#263868]/60 text-[#263868] text-lg focus:ring-2 focus:ring-[#263868] focus:border-[#263868] resize-none"
             />
             
             <Button
               type="submit"
-              className="w-full py-4 px-8 bg-black text-white font-bold text-lg rounded-full hover:bg-gray-800 transition-colors shadow-lg"
+              className="w-full py-4 px-8 bg-[#263868] text-[#ffce27] font-bold text-lg rounded-full hover:bg-[#3851a6] hover:text-white transition-colors shadow-lg"
             >
               Send Message
             </Button>
