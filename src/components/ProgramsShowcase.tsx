@@ -7,7 +7,7 @@ const programs = [
   {
     icon: <GraduationCap className="w-8 h-8 text-blue-600" />,
     title: "Summer & Winter Camps",
-    subtitle: "In-person & virtual, ages 7–18",
+    subtitle: "Available Online & On-Site, Designed for Ages 7–18",
     desc: "Make the most of your vacations by diving into hands-on STEM adventures where you build, code, and explore alongside curious minds in robotics, AI, 3D printing, and more. Connect, create, and learn all year round.",
     href: "#"
   },
