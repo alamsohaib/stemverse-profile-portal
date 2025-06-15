@@ -1,16 +1,17 @@
 
 import React from "react";
-// Placeholder images - replace with Instagram integration or custom uploads
+
+// Updated images with new uploads and corresponding captions
 const showcaseImgs = [
-  "/lovable-uploads/ef0f2976-79fd-47b8-ab0a-a598251ada8f.png",
-  "/lovable-uploads/1ecf0702-eaa5-4283-9bb5-ff187df825bf.png",
-  "/lovable-uploads/414562a0-bc63-4d90-ad88-a6f39add6aac.png"
+  "/lovable-uploads/8227a7cc-3529-4def-9b47-06d867c9cfa2.png",
+  "/lovable-uploads/3f2ecfeb-ae22-47cc-a3af-a968ad07517c.png",
+  "/lovable-uploads/734feffc-9234-4249-9eac-ca5fb3d4163d.png"
 ];
 
 const captions = [
-  "Real students exploring robotics 🚗",
-  "Hands-on STEM at camp sessions 🔬",
-  "Teachers training in AI integration 🤖"
+  "Students explore robotics through hands-on, guided learning.",
+  "Students bring ideas to life using 3D modeling tools.",
+  "Teachers gain practical skills to lead STEM learning in classrooms."
 ];
 
 const ShowcaseCarousel = () => (
