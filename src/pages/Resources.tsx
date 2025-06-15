@@ -100,16 +100,6 @@ const Resources = () => {
     },
     {
       id: 8,
-      title: "Makey Makey – How-To & 101 Course",
-      category: "Makey Makey",
-      icon: <Gamepad2 className="w-6 h-6" />,
-      description: "Official tutorials and a free beginner course to invent with Makey Makey using Scratch and simple electronics.",
-      link: "https://makeymakey.com/how-to/",
-      difficulty: "Beginner",
-      color: "from-pink-500 to-pink-600"
-    },
-    {
-      id: 9,
       title: "CoSpaces Edu Tutorials",
       category: "AR & VR",
       icon: <Glasses className="w-6 h-6" />,
@@ -119,7 +109,7 @@ const Resources = () => {
       color: "from-cyan-500 to-cyan-600"
     },
     {
-      id: 10,
+      id: 9,
       title: "Khan Academy – STEM Subjects",
       category: "General STEM",
       icon: <GraduationCap className="w-6 h-6" />,
@@ -130,7 +120,7 @@ const Resources = () => {
     }
   ];
 
-  const categories = ["all", "Arduino", "3D Printing", "Python Programming", "Tinkercad", "Electronics", "Robotics", "Micro:bit", "Makey Makey", "AR & VR", "General STEM"];
+  const categories = ["all", "Arduino", "3D Printing", "Python Programming", "Tinkercad", "Electronics", "Robotics", "Micro:bit", "AR & VR", "General STEM"];
 
   const filteredResources = resources.filter(resource => {
     const matchesSearch = resource.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -161,7 +151,7 @@ const Resources = () => {
             </h1>
           </div>
           <p className="text-2xl md:text-3xl text-[#ffce27] font-semibold mb-2">
-            📚 Curated tutorials and guides for every STEM enthusiast
+            Curated tutorials and guides for every STEM enthusiast
           </p>
           <p className="text-xl text-gray-600 max-w-4xl mx-auto">
             Explore handpicked resources from leading educational platforms. These free tutorials will help students, teachers, and curious minds dive deep into the world of STEM.
@@ -260,7 +250,7 @@ const Resources = () => {
               <ArrowRight className="w-8 h-8 text-[#263868]" />
             </div>
             <h2 className="text-4xl font-playfair font-bold mb-6">
-              🧠 More Coming Soon
+              More Coming Soon
             </h2>
             <p className="text-xl mb-8 leading-relaxed max-w-3xl mx-auto">
               We'll continue adding custom lesson plans, downloadable kits, and activity guides soon. Stay tuned for more exciting STEM resources!
@@ -275,7 +265,7 @@ const Resources = () => {
           <CardContent className="p-8 text-center">
             <Mail className="w-12 h-12 text-[#263868] mx-auto mb-4" />
             <h3 className="text-3xl font-playfair font-bold text-[#263868] mb-4">
-              📩 Want to suggest a resource?
+              Want to suggest a resource?
             </h3>
             <p className="text-lg text-[#263868] mb-6">
               Help us expand our collection! Share your favorite STEM learning resources with our community.
