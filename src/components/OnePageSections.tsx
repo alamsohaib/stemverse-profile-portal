@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Sparkle, Rocket, Brain, Code, Atom, MousePointerClick } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import HeroSection from "./HeroSection";
 
 // Apply animation on sections for smooth entry
 const Section = ({
@@ -25,76 +26,6 @@ const Section = ({
   </section>
 );
 
-// Hero section: flush, floating image, modern text layout
-const HomeHero = () => (
-  <Section
-    id="home"
-    bg="bg-gradient-to-b from-[#f8fafc] via-blue-50 to-[#f3f6fb] overflow-visible"
-    className="pt-10 pb-20"
-    fade={false}
-  >
-    <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-10 max-w-7xl mx-auto px-4">
-      {/* Centered text */}
-      <div className="flex-1 flex flex-col items-center z-20 gap-6 max-w-2xl animate-fade-in text-center">
-        <h1 className="text-4xl md:text-6xl font-playfair font-bold bg-gradient-to-r from-blue-900 via-accent to-yellow-400 bg-clip-text text-transparent leading-tight drop-shadow-lg mb-2">
-          Hands-On STEM Education for Every Generation
-        </h1>
-        <p className="text-xl md:text-2xl text-stemblue/90 font-medium mb-2">
-          Ignite curiosity. Build skills. Shape tomorrow.
-        </p>
-        <Button
-          size="lg"
-          className="mt-1 px-9 py-4 bg-gradient-to-tr from-blue-500 via-accent to-yellow-400 hover:from-yellow-400 hover:to-accent text-white font-extrabold rounded-xl shadow-lg
-           transition hover:scale-110 hover:shadow-2xl active:scale-100 ring-2 ring-blue-300/30 duration-200"
-          onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" })}
-        >
-          Explore Programs
-        </Button>
-      </div>
-      {/* Image (uses user-uploaded VR class photo) */}
-      <div className="relative flex-1 flex items-center justify-center md:justify-end w-full max-w-[600px] pt-8 md:pt-0">
-        <div
-          className="absolute -inset-x-6 -top-12 h-[400px] blur-2xl rounded-full opacity-35 pointer-events-none"
-          style={{
-            background: "radial-gradient(circle at 50% 30%, #dbeafe 0%, #ffe472 60%, #dbeafe 100%)",
-          }}
-        />
-        <img
-          src="/lovable-uploads/2c0ec58e-c17c-434e-a914-5c57db68cd11.png"
-          alt="Students in a hands-on STEM workshop"
-          className="w-full h-auto max-h-[420px] md:max-h-[500px] object-cover animate-float-hero ring-4 ring-accent/60 shadow-xl rounded-3xl"
-          style={{ borderRadius: "2.5rem" }}
-        />
-        <div className="absolute left-1/2 -translate-x-1/2 top-[16%] w-32 h-24 bg-blue-200/30 rounded-full blur-2xl pointer-events-none animate-float-glow" />
-      </div>
-    </div>
-    <style>{`
-      @keyframes float-hero {
-        0% { transform: translateY(0px);}
-        25% { transform: translateY(-12px);}
-        50% { transform: translateY(5px);}
-        75% { transform: translateY(-8px);}
-        100% { transform: translateY(0px);}
-      }
-      .animate-float-hero {
-        animation: float-hero 7.7s cubic-bezier(.3,0,.7,1) infinite;
-        will-change: transform;
-      }
-      .shadow-text-glow {
-        text-shadow: 0 2px 18px #a7d3ff60, 0 1px 1px #fff3;
-      }
-      @keyframes float-glow {
-        0%, 100% { opacity: 0.32; }
-        50% { opacity: 0.6; }
-      }
-      .animate-float-glow {
-        animation: float-glow 8s ease-in-out infinite;
-      }
-    `}</style>
-  </Section>
-);
-
-// Glass Card uses mild glassmorphism and on-hover tilt/enlarge
 const GlassCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => (
   <div
     className={`rounded-2xl bg-white/80 border border-blue-100 shadow-lg p-8 transition-transform duration-200 hover:scale-105 hover:-rotate-1 hover:shadow-2xl ${className} animate-fade-in`}
@@ -104,7 +35,6 @@ const GlassCard = ({ children, className = "" }: { children: React.ReactNode; cl
   </div>
 );
 
-// Modern, animated, glass program card w/ hover enlargement, accent glow, tilt
 const GlassProgramCard = ({
   color,
   title,
@@ -374,8 +304,10 @@ const Footer = () => (
 
 const OnePageSections = () => (
   <div className="bg-gradient-to-br from-[#f3f6fb] via-white to-[#ddebf7] min-h-screen">
-    <HomeHero />
+    <HeroSection />
     <hr className="border-b border-blue-100 my-0 animate-fade-in" />
+    {/* Remove HomeHero, as it's replaced by HeroSection */}
+    {/* <HomeHero /> */}
     <MissionSection />
     <STEMDefSection />
     <ProgramsSection />
