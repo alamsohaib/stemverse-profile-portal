@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import Programs from "./pages/Programs";
 import Resources from "./pages/Resources";
+import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 import AuthPage from "./pages/Auth";
 import StudentDashboard from "./pages/StudentDashboard";
@@ -26,6 +27,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/programs" element={<Programs />} />
           <Route path="/resources" element={<Resources />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/dashboard" element={<StudentDashboard />} />
           <Route path="/admin" element={<AdminUserApprovalPage />} />
