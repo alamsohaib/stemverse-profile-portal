@@ -1,7 +1,7 @@
 
 import React from "react";
 import HeroSection from "./HeroSection";
-+import StemverseStatement from "./StemverseStatement";
+import StemverseStatement from "./StemverseStatement";
 import QuickIntro from "./QuickIntro";
 import ProgramsShowcase from "./ProgramsShowcase";
 import WhyStemverse from "./WhyStemverse";
@@ -19,7 +19,7 @@ import LandingFooter from "./LandingFooter";
 const OnePageSections = () => (
   <div className="bg-gradient-to-br from-[#f3f6fb] via-white to-[#ddebf7] min-h-screen">
     <HeroSection />
-+    <StemverseStatement />
+    <StemverseStatement />
     <QuickIntro />
     <ProgramsShowcase />
     <WhyStemverse />
