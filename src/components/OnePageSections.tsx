@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Sparkle, Rocket, Brain, Code, Atom, MousePointerClick } from "lucide-react";
@@ -30,46 +29,40 @@ const Section = ({
 const HomeHero = () => (
   <Section
     id="home"
-    bg="bg-gradient-to-b from-[#f3f6fb] via-blue-50 to-[#ddebf7] overflow-visible"
+    bg="bg-gradient-to-b from-[#f8fafc] via-blue-50 to-[#f3f6fb] overflow-visible"
     className="pt-10 pb-20"
     fade={false}
   >
-    <div className="flex flex-col-reverse md:flex-row items-center justify-between gap-10 max-w-7xl mx-auto px-4">
-      {/* Text beside image */}
-      <div className="flex-1 flex flex-col items-start z-20 gap-6 max-w-xl animate-fade-in">
-        <h1 className="text-5xl md:text-7xl font-playfair font-bold bg-gradient-to-r from-blue-800 via-accent to-yellow-400 bg-clip-text text-transparent leading-tight shadow-text-glow">
-          Unlocking{" "}
-          <span className="text-yellow-500 bg-gradient-to-br from-yellow-400 to-accent bg-clip-text text-transparent">
-            endless possibilities
-          </span>{" "}
-          to empower young innovators.
+    <div className="flex flex-col-reverse md:flex-row items-center justify-center gap-10 max-w-7xl mx-auto px-4">
+      {/* Centered text */}
+      <div className="flex-1 flex flex-col items-center z-20 gap-6 max-w-2xl animate-fade-in text-center">
+        <h1 className="text-4xl md:text-6xl font-playfair font-bold bg-gradient-to-r from-blue-900 via-accent to-yellow-400 bg-clip-text text-transparent leading-tight drop-shadow-lg mb-2">
+          Hands-On STEM Education for Every Generation
         </h1>
-        <p className="text-lg md:text-2xl text-stemblue/90 font-semibold">
-          Empowering everyone with skills for the future—kids, teens, teachers, and adults.
-          <br />
-          <span className="text-accent font-bold">#STEMverse</span>
+        <p className="text-xl md:text-2xl text-stemblue/90 font-medium mb-2">
+          Ignite curiosity. Build skills. Shape tomorrow.
         </p>
         <Button
           size="lg"
-          className="mt-1 px-9 py-4 bg-gradient-to-tr from-blue-400 via-accent to-yellow-400 hover:from-yellow-400 hover:to-accent text-white font-extrabold rounded-xl shadow-lg
+          className="mt-1 px-9 py-4 bg-gradient-to-tr from-blue-500 via-accent to-yellow-400 hover:from-yellow-400 hover:to-accent text-white font-extrabold rounded-xl shadow-lg
            transition hover:scale-110 hover:shadow-2xl active:scale-100 ring-2 ring-blue-300/30 duration-200"
           onClick={() => document.getElementById("programs")?.scrollIntoView({ behavior: "smooth" })}
         >
-          Explore Programs <Rocket className="ml-2 animate-bounce-x" />
+          Explore Programs
         </Button>
       </div>
-      {/* FLUSH, floating, glowing, animated image */}
+      {/* Image (uses user-uploaded VR class photo) */}
       <div className="relative flex-1 flex items-center justify-center md:justify-end w-full max-w-[600px] pt-8 md:pt-0">
         <div
-          className="absolute -inset-x-6 -top-12 h-[400px] blur-2xl rounded-full opacity-40 pointer-events-none"
+          className="absolute -inset-x-6 -top-12 h-[400px] blur-2xl rounded-full opacity-35 pointer-events-none"
           style={{
-            background: "radial-gradient(circle at 50% 30%, #c2dbfb 0%, #ffe472 60%, #ddebf7 100%)",
+            background: "radial-gradient(circle at 50% 30%, #dbeafe 0%, #ffe472 60%, #dbeafe 100%)",
           }}
         />
         <img
-          src="/lovable-uploads/a0ee7f5e-7d91-46e2-b501-aad3f36b4398.png"
-          alt="Kids playing with robots"
-          className="w-full h-auto max-h-[480px] md:max-h-[540px] object-contain animate-float-hero hover:scale-105 transition-transform duration-300"
+          src="/lovable-uploads/2c0ec58e-c17c-434e-a914-5c57db68cd11.png"
+          alt="Students in a hands-on STEM workshop"
+          className="w-full h-auto max-h-[420px] md:max-h-[500px] object-cover animate-float-hero ring-4 ring-accent/60 shadow-xl rounded-3xl"
           style={{ borderRadius: "2.5rem" }}
         />
         <div className="absolute left-1/2 -translate-x-1/2 top-[16%] w-32 h-24 bg-blue-200/30 rounded-full blur-2xl pointer-events-none animate-float-glow" />
@@ -78,9 +71,9 @@ const HomeHero = () => (
     <style>{`
       @keyframes float-hero {
         0% { transform: translateY(0px);}
-        25% { transform: translateY(-20px);}
-        50% { transform: translateY(10px);}
-        75% { transform: translateY(-15px);}
+        25% { transform: translateY(-12px);}
+        50% { transform: translateY(5px);}
+        75% { transform: translateY(-8px);}
         100% { transform: translateY(0px);}
       }
       .animate-float-hero {
@@ -89,13 +82,6 @@ const HomeHero = () => (
       }
       .shadow-text-glow {
         text-shadow: 0 2px 18px #a7d3ff60, 0 1px 1px #fff3;
-      }
-      .animate-bounce-x {
-        animation: bounceX 1.15s infinite alternate cubic-bezier(0.7,0,0.3,1);
-      }
-      @keyframes bounceX {
-        0% { transform: translateX(0);}
-        100% { transform: translateX(6px);}
       }
       @keyframes float-glow {
         0%, 100% { opacity: 0.32; }
