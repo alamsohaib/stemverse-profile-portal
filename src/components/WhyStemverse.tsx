@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Award, Target, Shield } from "lucide-react";
 
@@ -7,7 +8,7 @@ const features = [
     title: "Proven Partnerships",
     desc: (
       <>
-        Top Schools, UNDP, NIC Peshawar, Women Techmakers, GIZ, OntarioTech
+        Collaborating with leading institutions and networks including top schools, UNDP, NIC Peshawar, Women Techmakers, GIZ, and Ontario Tech University.
       </>
     )
   },
