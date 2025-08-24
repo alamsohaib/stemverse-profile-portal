@@ -12,6 +12,8 @@ import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 import AuthPage from "./pages/Auth";
 import StudentDashboard from "./pages/StudentDashboard";
+import StudentDashboardNew from "./pages/StudentDashboardNew";
+import TeacherDashboard from "./pages/TeacherDashboard";
 import AdminUserApprovalPage from "./pages/AdminUserApproval";
 
 const queryClient = new QueryClient();
@@ -30,6 +32,8 @@ const App = () => (
           <Route path="/products" element={<Products />} />
           <Route path="/auth" element={<AuthPage />} />
           <Route path="/dashboard" element={<StudentDashboard />} />
+          <Route path="/student-dashboard" element={<StudentDashboardNew />} />
+          <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
           <Route path="/admin" element={<AdminUserApprovalPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />

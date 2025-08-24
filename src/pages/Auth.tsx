@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useSession } from "@/hooks/useSession";
+import { useUserRole } from "@/hooks/useUserRole";
 import { toast } from "@/components/ui/use-toast";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const gradeOptions = [
   "Pre-K",
@@ -30,7 +32,9 @@ const AuthPage = () => {
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [selectedRole, setSelectedRole] = useState<"student" | "teacher">("student");
   const { session, user } = useSession();
+  const { role, loading: roleLoading } = useUserRole();
   const navigate = useNavigate();
   const [submitting, setSubmitting] = useState(false);
 
@@ -42,10 +46,14 @@ const AuthPage = () => {
   const [grade, setGrade] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
-  // If already logged in, redirect based on user type
-  if (user) {
+  // If already logged in, redirect based on user role
+  if (user && !roleLoading) {
     if (user.email === ADMIN_EMAIL) {
       navigate("/admin");
+    } else if (role === 'teacher') {
+      navigate("/teacher-dashboard");
+    } else if (role === 'student') {
+      navigate("/student-dashboard");
     } else {
       navigate("/dashboard");
     }
@@ -92,6 +100,20 @@ const AuthPage = () => {
           toast({
             title: "Profile creation failed",
             description: profileError.message,
+          });
+        }
+        
+        // Also assign the selected role to the user
+        const { error: roleError } = await supabase.from("user_roles").insert([
+          {
+            user_id: userId,
+            role: selectedRole,
+          },
+        ]);
+        if (roleError) {
+          toast({
+            title: "Role assignment failed",
+            description: roleError.message,
           });
         }
       }
@@ -141,8 +163,29 @@ const AuthPage = () => {
         return;
       }
 
+      // Check user role and redirect accordingly
+      const { data: roleData, error: roleError } = await supabase
+        .from('user_roles')
+        .select('role')
+        .eq('user_id', userId)
+        .single();
+
+      if (roleError || !roleData) {
+        toast({ title: "Role fetch failed", description: "Unable to determine user role." });
+        await supabase.auth.signOut();
+        return;
+      }
+
       toast({ title: "Logged in!", description: "Welcome back." });
-      navigate("/dashboard");
+      
+      // Redirect based on user role
+      if (roleData.role === 'teacher') {
+        navigate("/teacher-dashboard");
+      } else if (roleData.role === 'student') {
+        navigate("/student-dashboard");
+      } else {
+        navigate("/dashboard");
+      }
     }
   };
 
@@ -150,8 +193,22 @@ const AuthPage = () => {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50">
       <div className="bg-white/90 rounded-2xl shadow-xl border p-10 w-full max-w-sm animate-fade-in">
         <h2 className="font-playfair text-3xl font-bold text-center text-accent mb-4">
-          {mode === "login" ? "Student Login" : "Create Your STEMverse Account"}
+          {mode === "login" ? "Login" : "Create Your STEMverse Account"}
         </h2>
+        
+        {/* Role Selection */}
+        <div className="mb-4">
+          <label className="block text-sm font-medium mb-2">I am a:</label>
+          <Select value={selectedRole} onValueChange={(value: "student" | "teacher") => setSelectedRole(value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select your role" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="student">Student</SelectItem>
+              <SelectItem value="teacher">Teacher</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
         <form onSubmit={handleAuth} className="flex flex-col gap-4">
           {mode === "signup" && (
             <>
