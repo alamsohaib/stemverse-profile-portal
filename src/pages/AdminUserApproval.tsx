@@ -98,7 +98,7 @@ const AdminUserApprovalPage = () => {
 
   // Filter and search function
   const getFilteredProfiles = (role?: string) => {
-    let filtered = profiles.filter(p => {
+    const filteredProfiles = profiles.filter(p => {
       const matchesSearch = (
         p.name?.toLowerCase().includes(search.toLowerCase()) ||
         p.email?.toLowerCase().includes(search.toLowerCase()) ||
@@ -112,7 +112,7 @@ const AdminUserApprovalPage = () => {
       return matchesSearch && matchesRole;
     });
 
-    return filtered.sort((a, b) => {
+    return filteredProfiles.sort((a, b) => {
       const aVal = a[sortKey] ?? "";
       const bVal = b[sortKey] ?? "";
       if (aVal < bVal) return sortDir === "asc" ? -1 : 1;
