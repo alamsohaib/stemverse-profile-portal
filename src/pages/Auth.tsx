@@ -48,9 +48,7 @@ const AuthPage = () => {
 
   // If already logged in, redirect based on user role
   if (user && !roleLoading) {
-    if (user.email === ADMIN_EMAIL) {
-      navigate("/admin");
-    } else if (role === 'teacher') {
+    if (role === 'teacher') {
       navigate("/teacher-dashboard");
     } else if (role === 'student') {
       navigate("/student-dashboard");
@@ -190,14 +188,7 @@ const AuthPage = () => {
       console.error("Login error:", error);
       toast({ title: "Login failed", description: error.message });
     } else {
-      // Check if user is admin
-      if (data.user.email === ADMIN_EMAIL) {
-        toast({ title: "Admin logged in!", description: "Welcome to the admin dashboard." });
-        navigate("/admin");
-        return;
-      }
-
-      // After login, check user's profile status for non-admin users
+      // After login, check user's profile status
       const userId = data.user.id;
       const { data: profiles, error: fetchError } = await supabase
         .from("profiles")
@@ -255,14 +246,6 @@ const AuthPage = () => {
            "Reset Your Password"}
         </h2>
         
-        {mode === "login" && (
-          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-sm text-blue-700">
-              <strong>Admin Access:</strong> Use kuratulain007@gmail.com to access the admin dashboard
-            </p>
-          </div>
-        )}
-
         {mode === "forgot-password" && (
           <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
             <p className="text-sm text-yellow-700">

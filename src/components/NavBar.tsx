@@ -70,14 +70,22 @@ const NavBar = () => {
           Products
         </NavLink>
       </div>
-      {/* Student Login button, always right */}
-      <div>
+      {/* Login buttons, always right */}
+      <div className="flex gap-2">
         <Button
           onClick={() => navigate("/auth")}
           className="bg-[#263868] text-[#ffce27] hover:bg-[#3851a6] hover:text-[#fff] rounded-md shadow font-bold border-2 border-[#263868]/15"
           size="sm"
         >
-          Student Login
+          Login
+        </Button>
+        <Button
+          onClick={() => navigate("/admin-login")}
+          variant="outline"
+          className="border-[#263868] text-[#263868] hover:bg-[#263868] hover:text-[#ffce27] rounded-md shadow font-bold"
+          size="sm"
+        >
+          Admin
         </Button>
       </div>
     </nav>
