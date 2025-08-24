@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
 import { useSession } from "@/hooks/useSession";
 import { useUserRole } from "@/hooks/useUserRole";
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const gradeOptions = [
@@ -29,7 +29,7 @@ const gradeOptions = [
 const ADMIN_EMAIL = "kuratulain007@gmail.com";
 
 const AuthPage = () => {
-  const [mode, setMode] = useState<"login" | "signup">("login");
+  const [mode, setMode] = useState<"login" | "signup" | "forgot-password">("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [selectedRole, setSelectedRole] = useState<"student" | "teacher">("student");
@@ -60,9 +60,37 @@ const AuthPage = () => {
     return null;
   }
 
+  const handleForgotPassword = async () => {
+    if (!email) {
+      toast({ title: "Email required", description: "Please enter your email address" });
+      return;
+    }
+
+    setSubmitting(true);
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth?mode=reset-password`,
+    });
+
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Error", description: error.message });
+    } else {
+      toast({ 
+        title: "Password reset email sent", 
+        description: "Check your email for the password reset link" 
+      });
+      setMode("login");
+    }
+  };
+
   const handleAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitting(true);
+
+    if (mode === "forgot-password") {
+      await handleForgotPassword();
+      return;
+    }
 
     if (mode === "signup") {
       if (!name) {
@@ -222,7 +250,9 @@ const AuthPage = () => {
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-yellow-50">
       <div className="bg-white/90 rounded-2xl shadow-xl border p-10 w-full max-w-sm animate-fade-in">
         <h2 className="font-playfair text-3xl font-bold text-center text-accent mb-4">
-          {mode === "login" ? "Login" : "Create Your STEMverse Account"}
+          {mode === "login" ? "Login" : 
+           mode === "signup" ? "Create Your STEMverse Account" : 
+           "Reset Your Password"}
         </h2>
         
         {mode === "login" && (
@@ -232,20 +262,30 @@ const AuthPage = () => {
             </p>
           </div>
         )}
+
+        {mode === "forgot-password" && (
+          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <p className="text-sm text-yellow-700">
+              Enter your email address and we'll send you a link to reset your password.
+            </p>
+          </div>
+        )}
         
-        {/* Role Selection */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium mb-2">I am a:</label>
-          <Select value={selectedRole} onValueChange={(value: "student" | "teacher") => setSelectedRole(value)}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select your role" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="student">Student</SelectItem>
-              <SelectItem value="teacher">Teacher</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        {/* Role Selection - only show for signup */}
+        {mode === "signup" && (
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2">I am a:</label>
+            <Select value={selectedRole} onValueChange={(value: "student" | "teacher") => setSelectedRole(value)}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select your role" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="student">Student</SelectItem>
+                <SelectItem value="teacher">Teacher</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
         <form onSubmit={handleAuth} className="flex flex-col gap-4">
           {mode === "signup" && (
             <>
@@ -305,16 +345,18 @@ const AuthPage = () => {
             required
             onChange={(e) => setEmail(e.target.value)}
           />
-          <Input
-            type="password"
-            placeholder="Password"
-            autoComplete={mode === "signup" ? "new-password" : "current-password"}
-            minLength={6}
-            required
-            value={password}
-            className="focus:ring-accent"
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          {mode !== "forgot-password" && (
+            <Input
+              type="password"
+              placeholder="Password"
+              autoComplete={mode === "signup" ? "new-password" : "current-password"}
+              minLength={6}
+              required
+              value={password}
+              className="focus:ring-accent"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          )}
           <Button
             type="submit"
             size="lg"
@@ -324,34 +366,64 @@ const AuthPage = () => {
             {submitting
               ? mode === "signup"
                 ? "Signing up..."
+                : mode === "forgot-password"
+                ? "Sending reset email..."
                 : "Logging in..."
               : mode === "signup"
               ? "Sign Up"
+              : mode === "forgot-password"
+              ? "Send Reset Email"
               : "Log In"}
           </Button>
         </form>
-        <div className="text-center text-sm mt-6 text-muted-foreground">
+        <div className="text-center text-sm mt-6 text-muted-foreground space-y-2">
           {mode === "login" ? (
             <>
-              Don't have an account?{" "}
-              <button
-                type="button"
-                className="text-accent font-medium underline"
-                onClick={() => setMode("signup")}
-              >
-                Sign up
-              </button>
+              <div>
+                Don't have an account?{" "}
+                <button
+                  type="button"
+                  className="text-accent font-medium underline"
+                  onClick={() => setMode("signup")}
+                >
+                  Sign up
+                </button>
+              </div>
+              <div>
+                <button
+                  type="button"
+                  className="text-accent font-medium underline"
+                  onClick={() => setMode("forgot-password")}
+                >
+                  Forgot your password?
+                </button>
+              </div>
+            </>
+          ) : mode === "signup" ? (
+            <>
+              <div>
+                Already have an account?{" "}
+                <button
+                  type="button"
+                  className="text-accent font-medium underline"
+                  onClick={() => setMode("login")}
+                >
+                  Log in
+                </button>
+              </div>
             </>
           ) : (
             <>
-              Already have an account?{" "}
-              <button
-                type="button"
-                className="text-accent font-medium underline"
-                onClick={() => setMode("login")}
-              >
-                Log in
-              </button>
+              <div>
+                Remember your password?{" "}
+                <button
+                  type="button"
+                  className="text-accent font-medium underline"
+                  onClick={() => setMode("login")}
+                >
+                  Back to login
+                </button>
+              </div>
             </>
           )}
         </div>
