@@ -70,51 +70,74 @@ const AuthPage = () => {
         setSubmitting(false);
         return;
       }
+      
+      console.log("Starting signup process for:", email, "Role:", selectedRole);
+      
       // 1. Sign up the user in Supabase
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
-        options: { emailRedirectTo: `${window.location.origin}/dashboard` },
+        options: { emailRedirectTo: `${window.location.origin}/` },
       });
+      
+      console.log("Signup response:", { data, error });
+      
       if (error) {
+        console.error("Signup error:", error);
         setSubmitting(false);
         toast({ title: "Signup failed", description: error.message });
         return;
       }
       // 2. If sign up successful, insert profile record with 'pending' status
       const userId = data.user?.id;
+      console.log("User ID after signup:", userId);
+      
       if (userId) {
-        const { error: profileError } = await supabase.from("profiles").insert([
-          {
-            id: userId,
-            name,
-            age: age ? Number(age) : null,
-            guardian_name: guardianName || null,
-            school_name: schoolName || null,
-            grade: grade || null,
-            phone_number: phoneNumber || null,
-            status: 'pending',
-          },
-        ]);
-        if (profileError) {
-          toast({
-            title: "Profile creation failed",
-            description: profileError.message,
-          });
-        }
+        // Check if this is a demo account (auto-approved by trigger)
+        const isDemoAccount = email === 'teacher@stemverse.demo' || email === 'student@stemverse.demo';
         
-        // Also assign the selected role to the user
-        const { error: roleError } = await supabase.from("user_roles").insert([
-          {
-            user_id: userId,
-            role: selectedRole,
-          },
-        ]);
-        if (roleError) {
-          toast({
-            title: "Role assignment failed",
-            description: roleError.message,
-          });
+        console.log("Is demo account:", isDemoAccount);
+        
+        if (!isDemoAccount) {
+          // Only create profile for non-demo accounts (demo accounts handled by trigger)
+          const { error: profileError } = await supabase.from("profiles").insert([
+            {
+              id: userId,
+              name,
+              age: age ? Number(age) : null,
+              guardian_name: guardianName || null,
+              school_name: schoolName || null,
+              grade: grade || null,
+              phone_number: phoneNumber || null,
+              status: 'pending',
+            },
+          ]);
+          
+          console.log("Profile creation result:", { profileError });
+          
+          if (profileError) {
+            toast({
+              title: "Profile creation failed",
+              description: profileError.message,
+            });
+          }
+          
+          // Also assign the selected role to the user (if not demo account)
+          const { error: roleError } = await supabase.from("user_roles").insert([
+            {
+              user_id: userId,
+              role: selectedRole,
+            },
+          ]);
+          
+          console.log("Role assignment result:", { roleError });
+          
+          if (roleError) {
+            toast({
+              title: "Role assignment failed", 
+              description: roleError.message,
+            });
+          }
         }
       }
       setSubmitting(false);
@@ -128,9 +151,15 @@ const AuthPage = () => {
     }
 
     // Login flow
+    console.log("Starting login process for:", email);
+    
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    
+    console.log("Login response:", { data, error });
+    
     setSubmitting(false);
     if (error) {
+      console.error("Login error:", error);
       toast({ title: "Login failed", description: error.message });
     } else {
       // Check if user is admin
