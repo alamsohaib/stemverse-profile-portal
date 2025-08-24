@@ -96,23 +96,166 @@ const AdminUserApprovalPage = () => {
     }
   };
 
-  // Search, sort
-  let filtered = profiles.filter(p =>
-    (p.name?.toLowerCase().includes(search.toLowerCase()) ||
-      p.email?.toLowerCase().includes(search.toLowerCase()) ||
-      p.guardian_name?.toLowerCase().includes(search.toLowerCase()) ||
-      p.school_name?.toLowerCase().includes(search.toLowerCase()) ||
-      p.grade?.toLowerCase().includes(search.toLowerCase()) ||
-      p.phone_number?.toLowerCase().includes(search.toLowerCase()))
-  );
+  // Filter and search function
+  const getFilteredProfiles = (role?: string) => {
+    let filtered = profiles.filter(p => {
+      const matchesSearch = (
+        p.name?.toLowerCase().includes(search.toLowerCase()) ||
+        p.email?.toLowerCase().includes(search.toLowerCase()) ||
+        p.guardian_name?.toLowerCase().includes(search.toLowerCase()) ||
+        p.school_name?.toLowerCase().includes(search.toLowerCase()) ||
+        p.grade?.toLowerCase().includes(search.toLowerCase()) ||
+        p.phone_number?.toLowerCase().includes(search.toLowerCase())
+      );
+      
+      const matchesRole = role ? p.role === role : true;
+      return matchesSearch && matchesRole;
+    });
 
-  filtered = filtered.sort((a, b) => {
-    const aVal = a[sortKey] ?? "";
-    const bVal = b[sortKey] ?? "";
-    if (aVal < bVal) return sortDir === "asc" ? -1 : 1;
-    if (aVal > bVal) return sortDir === "asc" ? 1 : -1;
-    return 0;
-  });
+    return filtered.sort((a, b) => {
+      const aVal = a[sortKey] ?? "";
+      const bVal = b[sortKey] ?? "";
+      if (aVal < bVal) return sortDir === "asc" ? -1 : 1;
+      if (aVal > bVal) return sortDir === "asc" ? 1 : -1;
+      return 0;
+    });
+  };
+
+  // Component for rendering user table
+  const UserTable = ({ role }: { role?: string }) => {
+    const filteredProfiles = getFilteredProfiles(role);
+    
+    return (
+      <>
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-xl font-semibold text-stemblue">
+            {role ? `${role.charAt(0).toUpperCase() + role.slice(1)} Management` : 'User Management'}
+          </h3>
+          <div className="flex gap-4 text-sm">
+            <span className="text-yellow-600">Pending: {filteredProfiles.filter(p => p.status === 'pending').length}</span>
+            <span className="text-green-600">Approved: {filteredProfiles.filter(p => p.status === 'approved').length}</span>
+            <span className="text-red-600">Rejected: {filteredProfiles.filter(p => p.status === 'rejected').length}</span>
+          </div>
+        </div>
+        <div className="mb-4 flex items-center gap-2">
+          <Input
+            placeholder="Search users by name, email, school..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="max-w-md"
+          />
+          <div className="ml-auto text-sm text-muted-foreground">
+            Total: {filteredProfiles.length} {role ? `${role}s` : 'users'}
+          </div>
+        </div>
+        <Table>
+          <TableHeader>
+            <TableRow>
+              {[
+                { key: "name", label: "Name" },
+                { key: "email", label: "Email" },
+                { key: "role", label: "Role" },
+                { key: "age", label: "Age" },
+                { key: "school_name", label: "School" },
+                { key: "grade", label: "Grade" },
+                { key: "status", label: "Status" }
+              ].map(({ key, label }) => (
+                <TableHead
+                  key={key}
+                  onClick={() => {
+                    if (sortKey === key) setSortDir(dir => dir === "asc" ? "desc" : "asc");
+                    setSortKey(key as keyof Profile);
+                  }}
+                  className="cursor-pointer hover:bg-gray-50"
+                >
+                  {label} {sortKey === key ? (sortDir === "asc" ? "↑" : "↓") : ""}
+                </TableHead>
+              ))}
+              <TableHead className="text-center">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredProfiles.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
+                  No {role ? `${role}s` : 'users'} found matching your search criteria
+                </TableCell>
+              </TableRow>
+            ) : (
+              filteredProfiles.map(profile => (
+                <TableRow key={profile.id} className="hover:bg-gray-50">
+                  <TableCell className="font-medium">{profile.name}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{profile.email}</TableCell>
+                  <TableCell>
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      profile.role === 'admin' ? 'bg-purple-100 text-purple-700' :
+                      profile.role === 'teacher' ? 'bg-blue-100 text-blue-700' :
+                      profile.role === 'student' ? 'bg-green-100 text-green-700' :
+                      'bg-gray-100 text-gray-700'
+                    }`}>
+                      {profile.role}
+                    </span>
+                  </TableCell>
+                  <TableCell>{profile.age || 'N/A'}</TableCell>
+                  <TableCell className="text-sm">{profile.school_name || 'N/A'}</TableCell>
+                  <TableCell>{profile.grade || 'N/A'}</TableCell>
+                  <TableCell>
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      profile.status === "pending" ? 'bg-yellow-100 text-yellow-700' :
+                      profile.status === "approved" ? 'bg-green-100 text-green-700' :
+                      'bg-red-100 text-red-700'
+                    }`}>
+                      {profile.status}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {profile.status === "pending" && (
+                      <div className="flex gap-2 justify-center">
+                        <Button 
+                          onClick={() => handleApprove(profile.id)} 
+                          size="sm" 
+                          className="bg-green-500 text-white hover:bg-green-600"
+                        >
+                          Approve
+                        </Button>
+                        <Button 
+                          onClick={() => handleReject(profile.id)} 
+                          size="sm" 
+                          variant="destructive"
+                        >
+                          Reject
+                        </Button>
+                      </div>
+                    )}
+                    {profile.status === "approved" && (
+                      <Button 
+                        onClick={() => handleReject(profile.id)} 
+                        size="sm" 
+                        variant="outline"
+                        className="text-red-600 hover:text-red-700"
+                      >
+                        Revoke
+                      </Button>
+                    )}
+                    {profile.status === "rejected" && (
+                      <Button 
+                        onClick={() => handleApprove(profile.id)} 
+                        size="sm" 
+                        variant="outline"
+                        className="text-green-600 hover:text-green-700"
+                      >
+                        Approve
+                      </Button>
+                    )}
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </>
+    );
+  };
 
   if (loading) return <div>Loading...</div>;
   if (!user) return <div>Please log in.</div>;
@@ -157,130 +300,20 @@ const AdminUserApprovalPage = () => {
           </TabsList>
           
           <TabsContent value="users" className="space-y-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-bold text-stemblue">User Management</h2>
-              <div className="flex gap-4 text-sm">
-                <span className="text-yellow-600">Pending: {profiles.filter(p => p.status === 'pending').length}</span>
-                <span className="text-green-600">Approved: {profiles.filter(p => p.status === 'approved').length}</span>
-                <span className="text-red-600">Rejected: {profiles.filter(p => p.status === 'rejected').length}</span>
-              </div>
-            </div>
-            <div className="mb-4 flex items-center gap-2">
-              <Input
-                placeholder="Search users by name, email, school..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                className="max-w-md"
-              />
-              <div className="ml-auto text-sm text-muted-foreground">
-                Total: {profiles.length} users
-              </div>
-            </div>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  {[
-                    { key: "name", label: "Name" },
-                    { key: "email", label: "Email" },
-                    { key: "role", label: "Role" },
-                    { key: "age", label: "Age" },
-                    { key: "school_name", label: "School" },
-                    { key: "grade", label: "Grade" },
-                    { key: "status", label: "Status" }
-                  ].map(({ key, label }) => (
-                    <TableHead
-                      key={key}
-                      onClick={() => {
-                        if (sortKey === key) setSortDir(dir => dir === "asc" ? "desc" : "asc");
-                        setSortKey(key as keyof Profile);
-                      }}
-                      className="cursor-pointer hover:bg-gray-50"
-                    >
-                      {label} {sortKey === key ? (sortDir === "asc" ? "↑" : "↓") : ""}
-                    </TableHead>
-                  ))}
-                  <TableHead className="text-center">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filtered.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={8} className="text-center py-8 text-muted-foreground">
-                      No users found matching your search criteria
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  filtered.map(profile => (
-                    <TableRow key={profile.id} className="hover:bg-gray-50">
-                      <TableCell className="font-medium">{profile.name}</TableCell>
-                      <TableCell className="text-sm text-muted-foreground">{profile.email}</TableCell>
-                      <TableCell>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          profile.role === 'admin' ? 'bg-purple-100 text-purple-700' :
-                          profile.role === 'teacher' ? 'bg-blue-100 text-blue-700' :
-                          profile.role === 'student' ? 'bg-green-100 text-green-700' :
-                          'bg-gray-100 text-gray-700'
-                        }`}>
-                          {profile.role}
-                        </span>
-                      </TableCell>
-                      <TableCell>{profile.age || 'N/A'}</TableCell>
-                      <TableCell className="text-sm">{profile.school_name || 'N/A'}</TableCell>
-                      <TableCell>{profile.grade || 'N/A'}</TableCell>
-                      <TableCell>
-                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${
-                          profile.status === "pending" ? 'bg-yellow-100 text-yellow-700' :
-                          profile.status === "approved" ? 'bg-green-100 text-green-700' :
-                          'bg-red-100 text-red-700'
-                        }`}>
-                          {profile.status}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-center">
-                        {profile.status === "pending" && (
-                          <div className="flex gap-2 justify-center">
-                            <Button 
-                              onClick={() => handleApprove(profile.id)} 
-                              size="sm" 
-                              className="bg-green-500 text-white hover:bg-green-600"
-                            >
-                              Approve
-                            </Button>
-                            <Button 
-                              onClick={() => handleReject(profile.id)} 
-                              size="sm" 
-                              variant="destructive"
-                            >
-                              Reject
-                            </Button>
-                          </div>
-                        )}
-                        {profile.status === "approved" && (
-                          <Button 
-                            onClick={() => handleReject(profile.id)} 
-                            size="sm" 
-                            variant="outline"
-                            className="text-red-600 hover:text-red-700"
-                          >
-                            Revoke
-                          </Button>
-                        )}
-                        {profile.status === "rejected" && (
-                          <Button 
-                            onClick={() => handleApprove(profile.id)} 
-                            size="sm" 
-                            variant="outline"
-                            className="text-green-600 hover:text-green-700"
-                          >
-                            Approve
-                          </Button>
-                        )}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
+            <Tabs defaultValue="teachers" className="w-full">
+              <TabsList className="grid w-full grid-cols-2">
+                <TabsTrigger value="teachers">Teachers</TabsTrigger>
+                <TabsTrigger value="students">Students</TabsTrigger>
+              </TabsList>
+              
+              <TabsContent value="teachers" className="space-y-4">
+                <UserTable role="teacher" />
+              </TabsContent>
+              
+              <TabsContent value="students" className="space-y-4">
+                <UserTable role="student" />
+              </TabsContent>
+            </Tabs>
           </TabsContent>
           
           <TabsContent value="highlights">
