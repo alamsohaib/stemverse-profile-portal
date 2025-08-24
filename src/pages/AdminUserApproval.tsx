@@ -47,39 +47,17 @@ const AdminUserApprovalPage = () => {
 
   useEffect(() => {
     async function fetchProfiles() {
-      // First get profiles
-      const { data: profilesData, error: profilesError } = await supabase
-        .from("profiles")
-        .select("*")
-        .order('created_at', { ascending: false });
+      // Use the admin view that includes emails and roles
+      const { data, error } = await supabase
+        .from("admin_user_view")
+        .select("*");
       
-      if (profilesError) {
-        toast({ title: "Error loading users", description: profilesError.message });
-        return;
+      if (error) {
+        toast({ title: "Error loading users", description: error.message });
+        console.error("Error fetching admin view:", error);
+      } else {
+        setProfiles(data || []);
       }
-
-      // Then get user emails and roles
-      const enrichedProfiles = await Promise.all(
-        (profilesData || []).map(async (profile) => {
-          // Get email from auth.users
-          const { data: userData } = await supabase.auth.admin.getUserById(profile.id);
-          
-          // Get role from user_roles
-          const { data: roleData } = await supabase
-            .from('user_roles')
-            .select('role')
-            .eq('user_id', profile.id)
-            .single();
-
-          return {
-            ...profile,
-            email: userData?.user?.email || 'N/A',
-            role: roleData?.role || 'No role assigned'
-          };
-        })
-      );
-
-      setProfiles(enrichedProfiles);
     }
     fetchProfiles();
   }, []);

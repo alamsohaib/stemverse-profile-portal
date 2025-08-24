@@ -225,6 +225,14 @@ const AuthPage = () => {
           {mode === "login" ? "Login" : "Create Your STEMverse Account"}
         </h2>
         
+        {mode === "login" && (
+          <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+            <p className="text-sm text-blue-700">
+              <strong>Admin Access:</strong> Use kuratulain007@gmail.com to access the admin dashboard
+            </p>
+          </div>
+        )}
+        
         {/* Role Selection */}
         <div className="mb-4">
           <label className="block text-sm font-medium mb-2">I am a:</label>

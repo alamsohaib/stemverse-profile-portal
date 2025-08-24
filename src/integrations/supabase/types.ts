@@ -118,9 +118,28 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      admin_user_view: {
+        Row: {
+          age: number | null
+          created_at: string | null
+          email: string | null
+          grade: string | null
+          guardian_name: string | null
+          id: string | null
+          name: string | null
+          phone_number: string | null
+          role: Database["public"]["Enums"]["app_role"] | null
+          school_name: string | null
+          status: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      get_user_email: {
+        Args: { user_uuid: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
