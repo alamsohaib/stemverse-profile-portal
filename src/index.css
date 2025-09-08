@@ -5,43 +5,62 @@
 
 @layer base {
   :root {
-    --background: 45 80% 97%;     /* very pale gold */
-    --foreground: 222.2 84% 4.9%;
+    --background: 240 100% 4%;        /* deep space dark */
+    --foreground: 240 20% 98%;       /* bright star white */
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 240 15% 8%;              /* dark space card */
+    --card-foreground: 240 20% 95%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 15% 8%;
+    --popover-foreground: 240 20% 95%;
 
-    --primary: 226 45% 32%;        /* brand blue */
-    --primary-foreground: 210 40% 98%;
+    --primary: 280 100% 65%;         /* cosmic purple */
+    --primary-foreground: 240 20% 98%;
 
-    --secondary: 45 95% 93%;       /* light gold/offwhite */
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 220 90% 55%;        /* stellar blue */
+    --secondary-foreground: 240 20% 98%;
 
-    --muted: 212 40% 97%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 240 10% 15%;
+    --muted-foreground: 240 15% 70%;
 
-    --accent: 45 100% 71%;         /* gold accent */
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 45 100% 65%;           /* golden nebula */
+    --accent-foreground: 240 15% 10%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 240 20% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.75rem;
+    --border: 240 15% 20%;
+    --input: 240 15% 15%;
+    --ring: 280 100% 65%;
+    --radius: 1rem;
+    
+    /* Space theme specific colors */
+    --space-purple: 280 100% 65%;
+    --space-blue: 220 90% 55%;
+    --nebula-pink: 320 80% 70%;
+    --star-yellow: 45 100% 70%;
+    --cosmic-glow: 280 100% 80%;
   }
 
   body {
     @apply bg-background text-foreground font-sans min-h-screen antialiased;
     background:
-      /* upmost: gentle gold to white, then soft blue fade outwards */
-      radial-gradient(at 75% 0%, #fff7e0 0px, transparent 70%),
-      radial-gradient(at 10% 96%, #dde7f4 0px, transparent 70%),
-      linear-gradient(120deg, #fffde8 40%, #e4eafd 100%);
+      /* Twinkling stars effect */
+      radial-gradient(2px 2px at 20px 30px, hsl(var(--star-yellow)), transparent),
+      radial-gradient(2px 2px at 40px 70px, hsl(var(--cosmic-glow)), transparent),
+      radial-gradient(1px 1px at 90px 40px, hsl(var(--star-yellow)), transparent),
+      radial-gradient(1px 1px at 130px 80px, hsl(var(--nebula-pink)), transparent),
+      radial-gradient(2px 2px at 160px 30px, hsl(var(--star-yellow)), transparent),
+      /* Deep space gradient */
+      radial-gradient(ellipse at center, hsl(280 100% 15%) 0%, hsl(240 100% 4%) 50%),
+      linear-gradient(135deg, hsl(280 80% 8%) 0%, hsl(240 100% 4%) 40%, hsl(220 100% 6%) 100%);
+    animation: twinkle 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes twinkle {
+    0% { opacity: 0.8; }
+    50% { opacity: 1; }
+    100% { opacity: 0.9; }
   }
 
   h1,h2,h3,.heading {

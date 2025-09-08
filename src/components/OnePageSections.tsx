@@ -17,7 +17,10 @@ import LandingFooter from "./LandingFooter";
 // All major sections (hero, showcase, why, etc) are now separated for clean structure.
 
 const OnePageSections = () => (
-  <div className="bg-gradient-to-br from-[#f3f6fb] via-white to-[#ddebf7] min-h-screen">
+  <div className="bg-background min-h-screen relative">
+    {/* Cosmic background overlay */}
+    <div className="fixed inset-0 bg-gradient-to-br from-space-purple/10 via-transparent to-space-blue/10 pointer-events-none"></div>
+    
     <HeroSection />
     <StemverseStatement />
     <QuickIntro />

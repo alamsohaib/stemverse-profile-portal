@@ -6,86 +6,104 @@ import { NavLink, useNavigate } from "react-router-dom";
 const NavBar = () => {
   const navigate = useNavigate();
 
-  // Use a light gold/white blend as background so logo pops, and blue/gold for accents
-  const navBg = "bg-white/85"; // Lighter background for logo visibility
-  const navShadow = "shadow-lg border-b border-[#ffce27]/30";
-  const linkBase = "font-medium text-base px-2 py-1 rounded transition";
-  // On white, blue looks more crisp; gold for highlight
-  const activeLink = "text-[#263868] underline underline-offset-4 bg-[#ffecd0]/80"; // deep blue text, pale gold bg
-  const inactiveLink = "text-[#263868] hover:text-[#FFCE27] hover:bg-[#e4eafd]"; // blue with gold hover
-
   return (
-    <nav className={`w-full flex items-center justify-between py-3 px-6 ${navBg} ${navShadow} sticky top-0 z-30`}>
-      {/* Logo + name, left */}
-      <NavLink to="/" className="flex items-center font-bold text-xl text-[#263868] hover:scale-105 transition gap-2">
-        <img
-          src="/lovable-uploads/829409f4-ab09-41be-90c0-d40a0f6e4712.png"
-          alt="STEMverse Logo"
-          className="w-10 h-10 object-contain"
-          style={{ marginRight: 0 }}
-        />
-        <span className="font-playfair tracking-wide">STEMverse</span>
+    <nav className="w-full flex items-center justify-between py-4 px-6 bg-card/90 backdrop-blur-md border-b border-primary/20 sticky top-0 z-50 shadow-lg">
+      {/* Logo + name with space theme */}
+      <NavLink to="/" className="flex items-center font-bold text-xl text-foreground hover:scale-105 transition-all duration-300 gap-2 group">
+        <div className="relative">
+          <img
+            src="/lovable-uploads/829409f4-ab09-41be-90c0-d40a0f6e4712.png"
+            alt="STEMverse Logo"
+            className="w-12 h-12 object-contain animate-float group-hover:animate-glow transition-all duration-300"
+          />
+          <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-glow"></div>
+        </div>
+        <span className="font-playfair tracking-wide bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+          STEMverse
+        </span>
       </NavLink>
-      {/* Center navigation links */}
+
+      {/* Center navigation links with space theme */}
       <div className="flex items-center gap-6 md:gap-8">
         <NavLink
           to="/"
           className={({ isActive }) =>
-            `${linkBase} ${isActive ? activeLink : inactiveLink}`
+            `font-medium text-base px-4 py-2 rounded-xl transition-all duration-300 ${
+              isActive 
+                ? "text-accent bg-primary/20 shadow-lg backdrop-blur-sm border border-primary/30" 
+                : "text-foreground hover:text-accent hover:bg-primary/10 hover:scale-105"
+            }`
           }
           end
         >
-          Home
+          🏠 Home
         </NavLink>
         <NavLink
           to="/about"
           className={({ isActive }) =>
-            `${linkBase} ${isActive ? activeLink : inactiveLink}`
+            `font-medium text-base px-4 py-2 rounded-xl transition-all duration-300 ${
+              isActive 
+                ? "text-accent bg-primary/20 shadow-lg backdrop-blur-sm border border-primary/30" 
+                : "text-foreground hover:text-accent hover:bg-primary/10 hover:scale-105"
+            }`
           }
         >
-          About
+          🚀 About
         </NavLink>
         <NavLink
           to="/programs"
           className={({ isActive }) =>
-            `${linkBase} ${isActive ? activeLink : inactiveLink}`
+            `font-medium text-base px-4 py-2 rounded-xl transition-all duration-300 ${
+              isActive 
+                ? "text-accent bg-primary/20 shadow-lg backdrop-blur-sm border border-primary/30" 
+                : "text-foreground hover:text-accent hover:bg-primary/10 hover:scale-105"
+            }`
           }
         >
-          Programs
+          🌟 Programs
         </NavLink>
         <NavLink
           to="/resources"
           className={({ isActive }) =>
-            `${linkBase} ${isActive ? activeLink : inactiveLink}`
+            `font-medium text-base px-4 py-2 rounded-xl transition-all duration-300 ${
+              isActive 
+                ? "text-accent bg-primary/20 shadow-lg backdrop-blur-sm border border-primary/30" 
+                : "text-foreground hover:text-accent hover:bg-primary/10 hover:scale-105"
+            }`
           }
         >
-          Resources
+          📚 Resources
         </NavLink>
         <NavLink
           to="/products"
           className={({ isActive }) =>
-            `${linkBase} ${isActive ? activeLink : inactiveLink}`
+            `font-medium text-base px-4 py-2 rounded-xl transition-all duration-300 ${
+              isActive 
+                ? "text-accent bg-primary/20 shadow-lg backdrop-blur-sm border border-primary/30" 
+                : "text-foreground hover:text-accent hover:bg-primary/10 hover:scale-105"
+            }`
           }
         >
-          Products
+          🛸 Products
         </NavLink>
       </div>
-      {/* Login buttons, always right */}
-      <div className="flex gap-2">
+
+      {/* Login buttons with space theme */}
+      <div className="flex gap-3">
         <Button
           onClick={() => navigate("/auth")}
-          className="bg-[#263868] text-[#ffce27] hover:bg-[#3851a6] hover:text-[#fff] rounded-md shadow font-bold border-2 border-[#263868]/15"
+          className="bg-gradient-to-r from-primary to-secondary text-white hover:from-primary/90 hover:to-secondary/90 rounded-xl shadow-lg font-bold border border-primary/30 transition-all duration-300 hover:scale-105 animate-glow"
           size="sm"
         >
-          Login
+          🌌 Login
         </Button>
         <Button
           onClick={() => navigate("/admin-login")}
           variant="outline"
-          className="border-[#263868] text-[#263868] hover:bg-[#263868] hover:text-[#ffce27] rounded-md shadow font-bold"
+          className="border-primary/50 text-foreground hover:bg-primary/10 hover:text-accent rounded-xl shadow-lg font-bold backdrop-blur-sm transition-all duration-300 hover:scale-105"
           size="sm"
         >
-          Admin
+          ⭐ Admin
         </Button>
       </div>
     </nav>
