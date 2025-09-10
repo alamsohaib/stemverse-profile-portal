@@ -14,11 +14,10 @@ const NavBar = () => {
           <img
             src="/lovable-uploads/829409f4-ab09-41be-90c0-d40a0f6e4712.png"
             alt="STEMverse Logo"
-            className="w-12 h-12 object-contain animate-float group-hover:animate-glow transition-all duration-300"
+            className="w-12 h-12 object-contain transition-all duration-300"
           />
-          <div className="absolute -inset-2 bg-gradient-to-r from-primary/20 to-accent/20 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 animate-glow"></div>
         </div>
-        <span className="font-playfair tracking-wide bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent">
+        <span className="font-playfair tracking-wide text-stemblue">
           STEMverse
         </span>
       </NavLink>
