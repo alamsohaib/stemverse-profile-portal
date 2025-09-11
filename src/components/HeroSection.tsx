@@ -9,7 +9,7 @@ const HeroSection = () => {
 
   return (
     <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden bg-background">
-      <div className="w-full px-4 flex flex-col lg:flex-row items-center gap-12 relative z-10">
+      <div className="container mx-auto px-4 flex flex-col lg:flex-row items-center gap-12 relative z-10">
         {/* Hero Content */}
         <div className="flex-1 text-center lg:text-left space-y-8 animate-fade-in">
           <div className="space-y-4">

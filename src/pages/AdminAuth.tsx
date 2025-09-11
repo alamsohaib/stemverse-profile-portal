@@ -57,8 +57,8 @@ const AdminAuthPage = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-50 to-red-50">
-      <div className="bg-white/90 rounded-2xl shadow-xl border p-10 w-full max-w-sm animate-fade-in">
+    <div className="flex items-center justify-center min-h-screen bg-background">
+      <div className="bg-card rounded-2xl shadow-xl border p-10 w-full max-w-sm">
         <div className="text-center mb-6">
           <h2 className="font-playfair text-3xl font-bold text-accent mb-2">
             Admin Login
