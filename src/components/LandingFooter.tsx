@@ -53,9 +53,9 @@ const LandingFooter = () => (
       
       {/* Contact Information with space theme */}
       <div className="flex flex-col items-center gap-3 mb-6">
-        <div className="flex items-center gap-2 text-foreground bg-card/60 backdrop-blur-sm rounded-xl px-4 py-2 border border-primary/20">
-          <Phone className="w-4 h-4 text-accent animate-glow" />
-          <span className="text-sm font-medium">🌌 WhatsApp:</span>
+        <div className="text-sm text-foreground bg-card/60 backdrop-blur-sm rounded-xl px-4 py-2 border border-primary/20">
+          <Phone className="w-4 h-4 text-accent inline mr-2" />
+          <span className="font-medium">🌌 WhatsApp:</span>
           <a href="https://wa.me/923020558423" className="text-sm hover:text-accent transition-colors">+92 302-0558423</a>
           <span className="text-sm">|</span>
           <a href="https://wa.me/923339116667" className="text-sm hover:text-accent transition-colors">+92 333-9116667</a>
@@ -74,7 +74,7 @@ const LandingFooter = () => (
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="w-12 h-12 bg-gradient-to-br from-primary/80 to-secondary/80 backdrop-blur-sm rounded-2xl flex items-center justify-center text-white hover:from-accent hover:to-star-yellow hover:scale-110 transition-all duration-300 shadow-lg animate-glow"
+            className="w-12 h-12 bg-gradient-to-br from-primary/80 to-secondary/80 backdrop-blur-sm rounded-2xl flex items-center justify-center text-white hover:from-accent hover:to-star-yellow hover:scale-110 transition-all duration-300 shadow-lg"
           >
             {icon}
           </a>

@@ -232,7 +232,7 @@ const MobileFlipCard = ({ step, index, isLast }) => {
 
 const HowItWorksTimeline = () => {
   return (
-    <section className="w-full bg-background py-16 px-4">
+    <section className="w-full bg-gradient-to-br from-yellow-50 via-blue-50 to-white py-16 px-4">
       <h2 className="text-3xl md:text-4xl font-bold font-playfair text-center text-stemblue mb-12">How It Works</h2>
       
       {/* Desktop Grid */}

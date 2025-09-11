@@ -19,9 +19,9 @@ const NavBar = () => {
               className="w-12 h-12 object-contain transition-all duration-300"
             />
           </div>
-          <span className="font-playfair tracking-wide text-stemblue">
-            STEMverse
-          </span>
+        <span className="font-playfair tracking-wide text-accent">
+          STEMverse
+        </span>
         </NavLink>
 
         {/* Mobile menu button */}
