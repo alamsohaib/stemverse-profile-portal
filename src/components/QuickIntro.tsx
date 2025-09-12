@@ -2,7 +2,7 @@ import React from "react";
 import { Atom, Rocket, Zap, Orbit } from "lucide-react";
 
 const QuickIntro = () => (
-  <section className="w-full py-16 px-4 bg-background">
+  <section className="w-full pb-16 px-4 bg-background">
     {/* Main content */}
     <div className="w-full text-center relative z-10">
       {/* Icon row with space theme */}
